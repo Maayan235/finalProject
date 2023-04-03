@@ -45,16 +45,33 @@ import React, { useState } from 'react';
     const waitSome = async (ml) =>{
       await delay(ml)
     }
-
+    const startReading = async() =>{
+      var instText = instructions[0]
+      setInstructionsCounter(1)
+      utterance.text = instText
+      speechSynthesis.speak(utterance);
+      //speak({language: "he-IL", voice: voices[2], text: instText, })
+      let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
+      let commas = instText.replace(/[^,]/g, "").length
+    //   console.log("sentences: " + sentences)
+    //   console.log("commas: " + commas)  
+        await delay(instText.length * 70 +  sentences * 700 + commas * 350);
+        listenContinuously();
+    
+  }
     const read_Next_Instruction = async (action) =>{
       resetTranscript()
       let toContinue = true
       let counter = 0
       var instText = "invalid action"
-      if(action ==="next" && instructionsCounter < instructions.length){
+      if(action ==="next"){
+        if(instructionsCounter == instructions.length){
+          instText = instText + ".No more instructions. To finish the reading say finish"
+        }else{
         counter = instructionsCounter
         instText = instructions[counter]
         setInstructionsCounter(instructionsCounter + 1)
+        }
       }else if(action === "again"){
         counter = instructionsCounter-1
         instText =  instructions[counter]
@@ -64,10 +81,11 @@ import React, { useState } from 'react';
         setInstructionsCounter(instructionsCounter - 1)
       }else if(action === "finish"){
         instText = "The reading is over."
+        setInstructionsCounter(0)
         toContinue = false
       }
-      if(counter + 1 == instructions.length && toContinue){
-        instText = instText + ".No more instructions. To finish the reading say finish"
+      if(counter == instructions.length && toContinue){
+        // instText = instText + ".No more instructions. To finish the reading say finish"
       }
       
       stopListening()
@@ -123,18 +141,10 @@ import React, { useState } from 'react';
     
   return (
      <div> 
-        <div>
+  
         <p>Microphone: {listening ? 'on' : 'off'}</p>
-        <button onClick={listenContinuously}>Start</button>
-  {
-
-    //<button onClick={stopListening}>Stop</button>
-      //       <br/><br/>
-      // <div><ol>{listItems}</ol></div>
-  }     
-
-      
-    </div>
+        <button onClick={startReading}>Start</button>
+  
     </div>
   );
 }; 

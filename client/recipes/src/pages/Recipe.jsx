@@ -43,8 +43,8 @@ function Recipe() {
 
       {activeTab === "instructions" && (
         <ul>
-        {ingridients.map((ingridient) => (
-          <li>{instructionsList}</li>
+        {instructionsList.map((inst) => (
+          <li>{inst}</li>
         ))}
       </ul>
       )}
