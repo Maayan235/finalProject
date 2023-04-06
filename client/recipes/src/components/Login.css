@@ -49,7 +49,7 @@ html, body{
     padding: 15px;
     border-radius: 7.5px;
     border: none;
-    background-color: #007bff;
+    background-color: #f06a44;
     color: #fff;
     font-size: 1.8rem;
     cursor: pointer;
@@ -59,11 +59,11 @@ html, body{
   }
   
   button:hover {
-    background-color: #0062cc;
+    background-color: #ce5f40;
   }
   
   button:active {
     transform: translateY(2px);
-    background-color: #005cbf;
+    background-color: #ce5f40;
   }
   

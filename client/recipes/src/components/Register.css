@@ -43,7 +43,7 @@
     padding: 10px;
     border-radius: 5px;
     border: none;
-    background-color: #007bff;
+    background-color: #f06a44;
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
@@ -53,10 +53,10 @@
   }
   
   button:hover {
-    background-color: #0062cc;
+    background-color: #ce5f40;
   }
   
   button:active {
     transform: translateY(2px);
-    background-color: #005cbf;
+    background-color: #ce5f40;
   }

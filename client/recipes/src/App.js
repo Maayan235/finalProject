@@ -23,46 +23,46 @@ function App() {
     setShowCategories(!showCategories);
   };
 
-  // return (
-  //   <div className="App">
-  //     <BrowserRouter>
-  //     <div className="nav-wrapper">
-  //       <Nav class="nav">
-  //         <Link to="/">
-  //           <img src={logo} alt="AudioChecf" className="logo" />
-  //         </Link>
-  //       </Nav>
-  //     </div>
+  return (
+    <div className="App">
+      <BrowserRouter>
+      <div className="nav-wrapper">
+        <Nav class="nav">
+          <Link to="/">
+            <img src={logo} alt="AudioChecf" className="logo" />
+          </Link>
+        </Nav>
+      </div>
 
-  //       <div className="sidenav">
-  //         <a href="/">Home</a>
-  //         <a href='/favorites'>Favorites</a>
-  //         <a href="#clients" onClick={toggleCategories}>
-  //            {showCategories ? <FaChevronUp /> : <FaChevronDown />} All Recipes
-  //           {showCategories ? (
-  //             <ul className="nested-list">
-  //               <li><a href='/cuisine/Italian'>Italian</a></li>
-  //               <li><a href='/cuisine/American'>American</a></li>
-  //               <li><a href='/cuisine/Thai'>Thai</a></li>
-  //               <li><a href='/cuisine/Japanese'>Japanese</a></li>
-  //             </ul>
-  //           ) : null}
-  //         </a>
-  //         <a href='/addRecipe'>Add new Recipe</a>
-  //       </div>
+        <div className="sidenav">
+          <a href="/">Home</a>
+          <a href='/favorites'>Favorites</a>
+          <a href="#clients" onClick={toggleCategories}>
+             {showCategories ? <FaChevronUp /> : <FaChevronDown />} All Recipes
+            {showCategories ? (
+              <ul className="nested-list">
+                <li><a href='/cuisine/Italian'>Italian</a></li>
+                <li><a href='/cuisine/American'>American</a></li>
+                <li><a href='/cuisine/Thai'>Thai</a></li>
+                <li><a href='/cuisine/Japanese'>Japanese</a></li>
+              </ul>
+            ) : null}
+          </a>
+          <a href='/addRecipe'>Add new Recipe</a>
+        </div>
         
-  //       <div className="main-wrapper">
-  //         <div class="main">
-  //           <Pages />
-  //         </div>
-  //       </div>
+        <div className="main-wrapper">
+          <div class="main">
+            <Pages />
+          </div>
+        </div>
 
-  //     </BrowserRouter>
+      </BrowserRouter>
 
-  //   </div>
-  // );
+    </div>
+  );
 
-  return(
+  {/*return(
     <div>
     {
       //<Login/>
@@ -71,7 +71,7 @@ function App() {
       <Register/>
     }
     </div>
-  );
+  );*/}
 
 }
 
