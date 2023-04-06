@@ -1,0 +1,69 @@
+html, body{
+    height:100%;
+}
+.login-container {
+    height: 100vh;
+    background-image: url(
+        https://thumbs.dreamstime.com/b/greek-food-background-traditional-different-greek-dishes-set-greek-food-background-traditional-different-greek-dishes-set-top-view-178761927.jpg
+                     );
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.my-font {
+    font-size: 22px;
+  }
+.inputs {
+    border-radius: 10px;
+    border-color: black;
+}
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  input {
+    padding: 15px;
+    border-radius: 7.5px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  button {
+    padding: 15px;
+    border-radius: 7.5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  button:hover {
+    background-color: #0062cc;
+  }
+  
+  button:active {
+    transform: translateY(2px);
+    background-color: #005cbf;
+  }
+  
