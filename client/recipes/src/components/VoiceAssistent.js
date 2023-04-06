@@ -142,10 +142,13 @@ import React, { useState } from 'react';
   return (
      <div> 
   
-        <p>Microphone: {listening ? 'on' : 'off'}</p>
-        <button onClick={startReading}>Start</button>
+        {/*<p>Microphone: {listening ? 'on' : 'off'}</p>*/}
+        <button onClick={startReading} className='start'>START READING!</button>
   
     </div>
   );
 }; 
+
+
+
 export default VoiceAssistent

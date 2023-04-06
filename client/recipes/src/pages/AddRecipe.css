@@ -1,0 +1,12 @@
+.instruction-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  
+  .instruction-number {
+    margin-right: 1rem;
+    width: 2rem;
+    text-align: right;
+  }

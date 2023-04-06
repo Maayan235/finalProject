@@ -36,7 +36,7 @@ function App() {
 
   //       <div className="sidenav">
   //         <a href="/">Home</a>
-  //         <a href="#about">Favorites</a>
+  //         <a href='/favorites'>Favorites</a>
   //         <a href="#clients" onClick={toggleCategories}>
   //            {showCategories ? <FaChevronUp /> : <FaChevronDown />} All Recipes
   //           {showCategories ? (
@@ -48,7 +48,7 @@ function App() {
   //             </ul>
   //           ) : null}
   //         </a>
-  //         <a href="#contact">Add new Recipe</a>
+  //         <a href='/addRecipe'>Add new Recipe</a>
   //       </div>
         
   //       <div className="main-wrapper">

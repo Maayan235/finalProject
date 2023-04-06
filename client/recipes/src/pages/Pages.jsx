@@ -6,6 +6,8 @@ import Recipe from "./Recipe";
 import React from 'react'
 import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom'
 import Popular from "../components/Popular";
+import AddRecipe from './AddRecipe'
+import Favorites from "./Favorites";
 
 
 function Pages() {
@@ -16,6 +18,8 @@ function Pages() {
         <Route path='/cuisine/:type' element={<Cuisine />} />
         <Route path='/searched/:search' element={<Searched />} />
         <Route path ='/recipe/:name' element={<Recipe />} />
+        <Route path ='/addRecipe' element={<AddRecipe />} />
+        <Route path ='/favorites' element={<Favorites />} />
     </Routes>
   );
 }

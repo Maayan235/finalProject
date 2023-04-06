@@ -5,11 +5,22 @@ import { useParams } from 'react-router-dom'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import VoiceAssistent from '../components/VoiceAssistent';
+import { FaRegStar, FaStar } from "react-icons/fa";
+import { AiOutlineStar } from 'react-icons/ai';
+import favoriteBtn from '../images/favorite_icon.png'
+import favoriteBtnActive from '../images/favorite_icon_active.png'
+
 
 function Recipe() {
 
   const [details, setDetails] = useState({});
   const [activeTab, setActiveTab] = useState("instructions");
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoriteClick = () => {
+    setIsFavorite(!isFavorite);
+  }
 
   let params = useParams();
 
@@ -31,10 +42,21 @@ function Recipe() {
     <DetailWrapper>
     <div className='top'>
       <h2>"title"</h2>
+      <img class= "recipeImg"src={favoriteBtn} alt="" />
+      <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
+      {isFavorite ? (
+        <img src={favoriteBtn}></img>
+      ) : (
+        <img src={favoriteBtnActive}></img>
+      )}
+      </div>
+      <div>
+      
+      </div>
     </div>
 
+
     <div>
-      <button className='start'>START READING!</button>
       <VoiceAssistent instructions = {instructionsList}/>
       <div className="button-container">
         <button className={activeTab === "instructions" ? "active" : ""} onClick={() => setActiveTab("instructions")}> Instructions </button>
@@ -57,11 +79,11 @@ function Recipe() {
       </ul>
       )}
     </div>
-          </DetailWrapper>
+   </DetailWrapper>
   /*<DetailWrapper>
     <div className='top'>
       <h2>{details.title}</h2>
-      <img src={details.image} alt="" />
+      <img class= "recipeImg"src={details.image} alt="" />
     </div>S
 
     <div>
@@ -100,6 +122,8 @@ const DetailWrapper = styled.div`
   padding: 2rem;
   background-color: white;
   border-radius: 1rem;
+  position: relative;
+
 
   .top {
     display: flex;
@@ -111,7 +135,7 @@ const DetailWrapper = styled.div`
     padding: 2rem;
   }
 
-  img {
+  .recipeImg {
     width: 35%;
     height: 35%;
     border-radius: 15%;
@@ -127,7 +151,7 @@ const DetailWrapper = styled.div`
   }
 
   button {
-    background-color: #40555a;
+    background-color:  rgb(226, 217, 207);
     color: white;
     border: none;
     padding: 1rem 1rem;
@@ -140,7 +164,7 @@ const DetailWrapper = styled.div`
   }
 
   .button-container button.active {
-    background-color: rgb(226, 217, 207);
+    background-color:#40555a;
   }
 
   .start {
@@ -149,7 +173,26 @@ const DetailWrapper = styled.div`
     background-color: #f06a44;
 }
 
+
+.favorite-icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  cursor: pointer;
+  display: block;
+  width:20%;
+  border:none;
+}
+
+img{
+  width: 30%;
+  height: 30%;
+}
+
+
 `;
+
+
 
 
 
