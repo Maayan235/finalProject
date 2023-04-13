@@ -23,6 +23,18 @@ recipesRoutes.route("/recipes").get(function (req, res) {
     });
 });
 
+// This section will help you get a single record by id
+recipesRoutes.route("/recipe/:id").get(function (req, res) {
+  let db_connect = dbo.getDb("RecipesWebsite");
+  let myquery = { _id: ObjectId( req.params.id )};
+  db_connect
+      .collection("recipes")
+      .findOne(myquery, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+      });
+});
+
 // This section will help you get a list cuisines according to type.
 recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
   let db_connect = dbo.getDb("RecipesWebsite");
@@ -47,6 +59,17 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
       res.status(400).send(err);
     }
   });
+
+  
+recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
+  let db_connect = dbo.getDb("RecipesWebsite");
+  db_connect
+    .collection("recipes")
+    .find({title: {$regex: req.params.search, $options: 'i'}})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
 });
 
 module.exports = recipesRoutes;

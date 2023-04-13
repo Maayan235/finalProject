@@ -36,7 +36,7 @@ function Favorites() {
             <h4 >Your favorites recipes:</h4>
             <br></br>
             <div className="card-container">
-                {Favorites.map((recipe) => (
+                {Favorites && Favorites.map((recipe) => (
                     <div className="card">
                     <RecipeCard recipe = {recipe}/>
                     </div>

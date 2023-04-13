@@ -56,7 +56,7 @@ function Cuisine() {
         <div>
             <h3>{params.type} Food:</h3>
             <div className="card-container">
-                {recipes.map((recipe) => (
+                {recipes && recipes.map((recipe) => (
                     <div className="card">
                     <RecipeCard recipe = {recipe}/>
                     </div>

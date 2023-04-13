@@ -11,17 +11,39 @@ function Searched() {
     const [searchedRecipes, setSearchRecipes] = useState([]);
     let params = useParams();
 
-    const getSearched = async (name) => {
-        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}`)
-        const recipes = await data.json();
-        setSearchRecipes(recipes.results);
+    // const getSearched = async (name) => {
+    //     const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}`)
+    //     const recipes = await data.json();
+    //     setSearchRecipes(recipes.results);
 
-    };
+    // };
 
+    // useEffect(() => {
+    //     getSearched(params.search);
+    // }, [params.search]);
+
+
+    // This method fetches the records from the database.
     useEffect(() => {
-        getSearched(params.search);
-    }, [params.search]);
+        async function getSearchedRecipes(search) {
+            const response = await fetch(`http://localhost:5000/recipes/searched/${search}`);
+        
+            if (!response.ok) {
+                const message = `An error occured: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+        
+            const recipes = await response.json();
+            setSearchRecipes(recipes);
 
+
+        }
+        if (params.search) {
+            getSearchedRecipes(params.search);
+        }
+
+    }, [params.search]);
 
   return (
 
