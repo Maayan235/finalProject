@@ -1,2 +1,4 @@
 client/recipes/package-lock.json
 node_modules/
+server/package.json
+server/package-lock.json
