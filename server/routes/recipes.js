@@ -23,7 +23,7 @@ recipesRoutes.route("/recipes").get(function (req, res) {
     });
 });
 
-// This section will help you get a list of all the records.
+// This section will help you get a list cuisines according to type.
 recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
   let db_connect = dbo.getDb("RecipesWebsite");
   db_connect
@@ -33,6 +33,20 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
       if (err) throw err;
       res.json(result);
     });
+});
+
+
+// This section will help you get a list of all the records.
+recipesRoutes.route("/recipes/add").post(function (req, res) {
+  const newRecipe = req.body; // assuming that the request body is a JSON object
+  let db_connect = dbo.getDb();
+  
+  db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  });
 });
 
 module.exports = recipesRoutes;

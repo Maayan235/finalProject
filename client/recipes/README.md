@@ -72,4 +72,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 TODO:
 1. installations
 2. recipe images
+3. npm install mongodb express cors dotenv
+4. npm i react-speech-recognition
+5. npm i speech-recognition-aws-polyfill
+6. npm install react-speech-kit --legacy-peer-deps
+7. npm install @splidejs/react-splide
+8. npm install react-icons --save
+9. npm install --save styled-components
+10. npm i react-router-dom
 

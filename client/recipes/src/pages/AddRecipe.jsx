@@ -1,14 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from 'styled-components';
 
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
 function AddReciepe() {
-  const [recipeName, setRecipeName] = useState("");
-  const [ingredients, setIngredients] = useState("");
+  const [recipeTitle, setRecipeTitle] = useState("");
+  const [ingredients, setIngredients] = useState([""]);
   const [recipePicture, setRecipePicture] = useState(null);
-    const [instructions, setInstructions] = useState([""]);
+  const [instructions, setInstructions] = useState([""]);
+  const [tags, setTags] = useState([""]);
+  const [types, setTypes] = useState([""]);
+
+  // This function will handle the submission.
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    // When a post request is sent to the create url, we'll add a new record to the database.
+    // const newPerson = { ...form };
+
+    await fetch("http://localhost:5000/recipes/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(newPerson),
+      body: "test",
+    })
+    .catch(error => {
+      window.alert(error);
+      return;
+    });
+
+    // setForm({ name: "", position: "", level: "" });
+    // navigate("/");
+  }
 
   const handleInstructionChange = (idx, e) => {
     const newInstructions = [...instructions];
@@ -22,27 +49,72 @@ function AddReciepe() {
     setInstructions(newInstructions);
   };
 
+  const handleIngredientChange = (idx, e) => {
+    const newIngredients = [...ingredients];
+    newIngredients[idx] = e.target.value;
+    setIngredients(newIngredients);
+  };
+
+  const handleAddIngredient = () => {
+    const newIngredients = [...ingredients];
+    newIngredients.push("");
+    setIngredients(newIngredients);
+  };
+
   const handleRecipePictureChange = (event) => {
     setRecipePicture(event.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const newRecipe = {
+    title: recipeTitle,
+    ingredients: ingredients,
+    instructions: instructions,
+    image: recipePicture,
+    tags: tags,
+    types: types
+  };
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e)
-    // Do something with the recipe data
+    console.log(e);
+    console.log(JSON.stringify(newRecipe));
+    await fetch("http://localhost:5000/recipes/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRecipe),
+    })
+    .catch(error => {
+      window.alert(error);
+      return;
+    });    
   };
 
   return (
     <FormWrapper  className="AddReciepe" onSubmit={handleSubmit}>
       <label>
         <div className="margin-top">Recipe Name:</div>
-        <input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} />
+        <input type="text" value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
       </label>
-     
+
       <label>
-        <div className="margin-top">Ingredients:</div>
-        <textarea value={ingredients} onChange={(e) => setIngredients(e.target.value)} />
-      </label>
+      <div className="margin-top">Ingredients:</div>
+      {ingredients.map((ingredient, idx) => (
+          <div key={idx} className="instruction-row">
+          <div className="instruction-number">{idx + 1}.</div>
+          <input
+              type="text"
+              value={ingredient}
+              onChange={(e) => handleIngredientChange(idx, e)}
+          />
+          </div>
+      ))}
+      <button className="margin-top" type="button" onClick={handleAddIngredient}>
+          Add Ingredient
+      </button>
+    </label>
+
 
       <label>
         <div className="margin-top">Instructions:</div>
@@ -66,7 +138,7 @@ function AddReciepe() {
         <input type="file" onChange={handleRecipePictureChange} />
       </label>
 
-      <button className="margin-top" type="submit" >Submit Recipe</button>
+      <input className="margin-top" type="submit" value="Submit Recipe"/>
     </FormWrapper >
   );
 
