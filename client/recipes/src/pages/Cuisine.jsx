@@ -7,6 +7,8 @@ import '../components/Card.css'
 function Cuisine() {
 
     const [cuisine, setCuisine] = useState([]);
+    const [recipes, setRecipes] = useState([]);
+    const [recipesByType, setRecipesByType] = useState([]);
     let params = useParams();
 
     const getCuisine = async (name) => {
@@ -23,15 +25,38 @@ function Cuisine() {
         }
     };
 
+    
+    
+    // This method fetches the records from the database.
     useEffect(() => {
-        getCuisine(params.type);
+        async function getRecipes(type) {
+            const response = await fetch(`http://localhost:5000/recipes/cuisine/${type}`);
+        
+            if (!response.ok) {
+                const message = `An error occured: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+        
+            const recipes = await response.json();
+            setRecipes(recipes);
+
+
+        }
+        if (params.type) {
+            getRecipes(params.type);
+        }
 
     }, [params.type]);
+
+
+
+
     return (
         <div>
             <h3>{params.type} Food:</h3>
             <div className="card-container">
-                {cuisine.map((recipe) => (
+                {recipes.map((recipe) => (
                     <div className="card">
                     <RecipeCard recipe = {recipe}/>
                     </div>
