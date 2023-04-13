@@ -24,4 +24,16 @@ usersRoutes.route("/users").get(function (req, res) {
     });
 });
 
+// This section will help you add a user to the database.
+usersRoutes.route("/users/add").post(function (req, res) {
+  const newUser = req.body; // assuming that the request body is a JSON object
+  let db_connect = dbo.getDb();
+  db_connect.collection("users").insertOne(newUser, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  });
+});
+
 module.exports = usersRoutes;

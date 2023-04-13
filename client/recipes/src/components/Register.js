@@ -21,7 +21,7 @@ function Register() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     setUsernameError('');
     setEmailError('');
@@ -57,6 +57,24 @@ function Register() {
     console.log('Username:', username);
     console.log('Email:', email);
     console.log('Password:', password);
+
+    let newUser = { username:username , email:email, password:password };
+
+    console.log(JSON.stringify(newUser));
+    await fetch("http://localhost:5000/users/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+    .catch(error => {
+      window.alert(error);
+      return;
+    });
+
+    // setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
+    // navigate("/"); 
   };
 
   return (
