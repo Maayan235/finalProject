@@ -90,8 +90,8 @@ function AddReciepe() {
       return;
     });
 
-    setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
-    navigate("/");    
+    // setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
+    // navigate("/");    
   };
 
   return (

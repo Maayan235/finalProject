@@ -59,8 +59,9 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
       res.status(400).send(err);
     }
   });
+});
 
-  
+
 recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
   let db_connect = dbo.getDb("RecipesWebsite");
   db_connect
