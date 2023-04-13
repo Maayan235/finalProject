@@ -88,7 +88,10 @@ function AddReciepe() {
     .catch(error => {
       window.alert(error);
       return;
-    });    
+    });
+
+    setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
+    navigate("/");    
   };
 
   return (
