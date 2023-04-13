@@ -38,7 +38,7 @@ import React, { useState } from 'react';
     //   }
     // ]; 
     
-    const listItems = instructions.map((inst) =>
+    const listItems = instructions && instructions.map((inst) =>
     <li>{inst}</li>)
     
     const [message, setMessage] = useState('');

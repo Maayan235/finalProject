@@ -13,10 +13,11 @@ import favoriteBtnActive from '../images/favorite_icon_active.png'
 
 function Recipe() {
 
-  const [details, setDetails] = useState({});
+  const [recipe, setRecipe] = useState([]);
   const [activeTab, setActiveTab] = useState("instructions");
-
   const [isFavorite, setIsFavorite] = useState(false);
+  // const instructionsCopy = [...recipe.instructions];
+
 
   const handleFavoriteClick = () => {
     setIsFavorite(!isFavorite);
@@ -24,25 +25,35 @@ function Recipe() {
 
   let params = useParams();
 
-  const fetchDetails = async () => {
-    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`);
-    const detailData = await data.json();
-
-    setDetails(detailData);
-    console.log(detailData);
-  };
+  // const instructionsList = ['step one','Add 500 ml of water and mix well. jump on one leg, put your finger on your tongue', 'step three.' ]
+  // const ingridients = ['water, bla ,blabla' ]
 
   useEffect(() => {
-    fetchDetails();
-  }, [params.name]);
-  const instructionsList = ['step one','Add 500 ml of water and mix well. jump on one leg, put your finger on your tongue', 'step three.' ]
-  const ingridients = ['water, bla ,blabla' ]
+    async function getRecipe(name) {
+        const response = await fetch(`http://localhost:5000/recipe/${name}`);
+    
+        if (!response.ok) {
+            const message = `An error occured: ${response.statusText}`;
+            window.alert(message);
+            return;
+        }
+    
+        const recipe = await response.json();
+        setRecipe(recipe);
+    }
+    if (params.name) {
+      getRecipe(params.name);
+    }
+    console.log("recipe.instructions:", recipe.instructions)
+
+}, [params.name]);
+
 
   return (
     <DetailWrapper>
     <div className='top'>
-      <h2>"title"</h2>
-      <img class= "recipeImg"src={favoriteBtn} alt="" />
+      <h2>{recipe.title}</h2>
+      <img class= "recipeImg"src={recipe.image} alt="" />
       <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
       {isFavorite ? (
         <img src={favoriteBtn}></img>
@@ -56,60 +67,35 @@ function Recipe() {
     </div>
 
 
-    <div>
-      <VoiceAssistent instructions = {instructionsList}/>
-      <div className="button-container">
-        <button className={activeTab === "instructions" ? "active" : ""} onClick={() => setActiveTab("instructions")}> Instructions </button>
-        <button className={activeTab === "ingredients" ? "active" : ""} onClick={() => setActiveTab("ingredients")}> Ingredients </button>
+      <div>
+        <VoiceAssistent instructions = {recipe.instructions}/>
+        <div className="button-container">
+          <button className={activeTab === "instructions" ? "active" : ""} onClick={() => setActiveTab("instructions")}> Instructions </button>
+          <button className={activeTab === "ingredients" ? "active" : ""} onClick={() => setActiveTab("ingredients")}> Ingredients </button>
       </div>
 
       {activeTab === "instructions" && (
         <ul>
-        {instructionsList.map((inst) => (
+        {recipe.instructions && recipe.instructions.map((inst) => (
           <li>{inst}</li>
         ))}
       </ul>
       )}
 
+
+
       {activeTab === "ingredients" && (
         <ul>
-        {ingridients.map((ingridient) => (
+        {recipe.ingredients && recipe.ingredients.map((ingridient) => (
           <li>{ingridient}</li>
         ))}
       </ul>
       )}
     </div>
+
    </DetailWrapper>
-  /*<DetailWrapper>
-    <div className='top'>
-      <h2>{details.title}</h2>
-      <img class= "recipeImg"src={details.image} alt="" />
-    </div>S
 
-    <div>
-      <button className='start'>START READING!</button>
-      <VoiceAssistent instructions = {details.extendedIngredients}/>
-      <div className="button-container">
-        <button className={activeTab === "instructions" ? "active" : ""} onClick={() => setActiveTab("instructions")}> Instructions </button>
-        <button className={activeTab === "ingredients" ? "active" : ""} onClick={() => setActiveTab("ingredients")}> Ingredients </button>
-      </div>
-
-      {activeTab === "instructions" && (
-        <div>
-          <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
-        </div>
-      )}
-
-      {activeTab === "ingredients" && (
-        <ul>
-          {details.extendedIngredients.map((ingridient) => (
-            <li key={ingridient.id}>{ingridient.original}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-          </DetailWrapper>*/
-);
+  );
 }
 
 const DetailWrapper = styled.div`

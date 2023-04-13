@@ -41,10 +41,10 @@ function App() {
              {showCategories ? <FaChevronUp /> : <FaChevronDown />} All Recipes
             {showCategories ? (
               <ul className="nested-list">
-                <li><a href='/cuisine/Italian'>Italian</a></li>
-                <li><a href='/cuisine/American'>American</a></li>
-                <li><a href='/cuisine/Thai'>Thai</a></li>
-                <li><a href='/cuisine/Japanese'>Japanese</a></li>
+                <li><a href='/cuisine/italian'>Italian</a></li>
+                <li><a href='/cuisine/american'>American</a></li>
+                <li><a href='/cuisine/thai'>Thai</a></li>
+                <li><a href='/cuisine/japanese'>Japanese</a></li>
               </ul>
             ) : null}
           </a>
