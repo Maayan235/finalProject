@@ -13,30 +13,6 @@ function AddReciepe() {
   const [tags, setTags] = useState([""]);
   const [types, setTypes] = useState([""]);
 
-  // This function will handle the submission.
-  async function onSubmit(e) {
-    e.preventDefault();
-
-    // When a post request is sent to the create url, we'll add a new record to the database.
-    // const newPerson = { ...form };
-
-    await fetch("http://localhost:5000/recipes/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify(newPerson),
-      body: "test",
-    })
-    .catch(error => {
-      window.alert(error);
-      return;
-    });
-
-    // setForm({ name: "", position: "", level: "" });
-    // navigate("/");
-  }
-
   const handleInstructionChange = (idx, e) => {
     const newInstructions = [...instructions];
     newInstructions[idx] = e.target.value;
