@@ -73,4 +73,47 @@ recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
     });
 });
 
+recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
+  let db_connect = dbo.getDb("RecipesWebsite");
+  db_connect
+    .collection("recipes")
+    .find({title: {$regex: req.params.search, $options: 'i'}})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
+
+recipesRoutes.route("/recipes/edit/:id").put(function(req, res) {
+  const recipeId = req.params.id;
+  const updatedRecipe = req.body; // assuming that the request body is a JSON object
+  
+  let db_connect = dbo.getDb();
+  
+  db_connect.collection("recipes").updateOne({_id: ObjectId(recipeId)}, {$set: updatedRecipe}, function(err, result) {
+    if (err) {
+    console.log(err);
+    res.status(400).send(err);
+    } else {
+    res.status(200).send(result);
+    }
+  });
+});
+
+recipesRoutes.route('/recipes/delete/:id').delete(function(req, res) {
+  const recipeId = req.params.id;
+  
+  let db_connect = dbo.getDb();
+  
+  db_connect.collection('recipes').deleteOne({_id: ObjectId(recipeId)}, function(err, result) {
+      if (err) {
+      console.log(err);
+      res.status(400).send(err);
+      } else {
+      res.status(200).send(result);
+      }
+    });
+  });
+
+  
 module.exports = recipesRoutes;
