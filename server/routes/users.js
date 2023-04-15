@@ -24,6 +24,18 @@ usersRoutes.route("/users").get(function (req, res) {
     });
 });
 
+
+//get user with spesific username ans passward
+usersRoutes.route('/users/find').get(function(req, res) {
+  const db_connect = dbo.getDb("RecipesWebsite");
+  const username = req.query.username;
+  const password = req.query.password;
+  db_connect.collection('users').findOne({username: username, password: password}, function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
 // This section will help you add a user to the database.
 usersRoutes.route("/users/add").post(function (req, res) {
   const newUser = req.body; // assuming that the request body is a JSON object
