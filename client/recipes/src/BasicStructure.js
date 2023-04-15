@@ -15,8 +15,10 @@ import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 
-function BasicStructure() {
 
+
+function BasicStructure({ userId, onLogout }) {
+  console.log(userId)
   const [showCategories, setShowCategories] = useState(false);
 
   const toggleCategories = () => {
@@ -25,7 +27,6 @@ function BasicStructure() {
 
   return (
     <div className="BasicStructure">
-      
       <div className="nav-wrapper">
         <Nav class="nav">
           <Link to="/">
@@ -60,18 +61,6 @@ function BasicStructure() {
 
     </div>
   );
-
-  {/*return(
-    <div>
-    {
-      //<Login/>
-    }
-    {
-      <Register/>
-    }
-    </div>
-  );*/}
-
 }
 
 const Logo = styled(Link)`

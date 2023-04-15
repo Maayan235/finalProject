@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import './Login.css';
 
-function Login() {
+function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -21,14 +21,12 @@ function Login() {
     event.preventDefault();
 
     const response = await fetch(`http://localhost:5000/users/find?username=${username}&password=${password}`);
-    console.log(response);
     const data = await response.json();
-    console.log(data);
 
 
     if (data) {
-      console.log(data.username)
-      navigate(`/BasicStructure/${data._id}`);
+      onLogin(data._id); // set the userId in the parent App component
+      // navigate('/'); // navigate to the BasicStructure component
     } else {
       setError('Invalid username or password');
     }

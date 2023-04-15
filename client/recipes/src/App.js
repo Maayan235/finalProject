@@ -1,5 +1,5 @@
 import Pages from "./pages/Pages";
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Category from "./components/Category";
 import Search from "./components/Search";
 import Login from "./components/Login";
@@ -11,38 +11,56 @@ import { Link } from "react-router-dom";
 import img from './images/header4.jpg'
 import logo from './images/logo.jpg'
 import './App.css'
-import React, { useState } from 'react';
+import React, { useState,  useEffect } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import BasicStructure from "./BasicStructure";
 
 
 function App() {
 
+  const [userId, setUserId] = useState(null);
   const [showCategories, setShowCategories] = useState(false);
 
   const toggleCategories = () => {
     setShowCategories(!showCategories);
   };
 
-  // return (
-  //   <div className="App">
-  //     <BasicStructure/>
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
-  //   </div>
-  // );
+  const handleLogin = (userId) => {
+    setUserId(userId);
+    localStorage.setItem("userId", userId);
+  };
 
-  return(
+  const handleLogout = () => {
+    setUserId(null);
+    localStorage.removeItem("userId");
+  };
+
+  return (
+
+    <div>
     <BrowserRouter>
-    {
-      <Login/>
-    }
-    {
-      // <Register/>
-    }
+      {userId ? (
+        <BasicStructure userId={userId} onLogout={handleLogout}/>
+      ) : (
+        <Login onLogin={handleLogin} />
+      )}
     </BrowserRouter>
+    </div>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={userId ? <BasicStructure userId={userId} onLogout={handleLogout}/> : <Login onLogin={handleLogin} />} />
+    //     <Route path="/register" element={<Register />} />
+    //   </Routes>
+    // </BrowserRouter>
   );
-
-}
+}  
 
 const Logo = styled(Link)`
   width: 20px;
