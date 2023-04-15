@@ -47,9 +47,9 @@ function Register({afterRegister, backToLogin}) {
     }
 
     // Check password
-    const passwordPattern = /^(?=.*\d)(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     if (!passwordPattern.test(password)) {
-      setPasswordError('Password must contain at least one uppercase letter, one number, and be at least 8 characters long');
+      setPasswordError('Password must contain at least one uppercase letter, at least one digit, at least one special character from the set !@#$%^&*, and are at least 8 characters long.');
       return;
     }
 
@@ -68,13 +68,15 @@ function Register({afterRegister, backToLogin}) {
       },
       body: JSON.stringify(newUser),
     })
+    .then(response => response.json())
+    .then(data => {
+      const userId = data.insertedId;
+      afterRegister(userId);
+    })
     .catch(error => {
       window.alert(error);
       return;
-    });
-
-    // setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
-    // navigate("/"); 
+    }); 
   };
 
   return (

@@ -26,7 +26,7 @@ function Login({ onLogin }) {
     const data = await response.json();
 
 
-    if (data) {
+    if (response.status === 200) {
       onLogin(data._id); // set the userId in the parent App component
       // navigate('/'); // navigate to the BasicStructure component
     } else {
