@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 
-function Register() {
+function Register({afterRegister, backToLogin}) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -112,6 +112,8 @@ function Register() {
         />
         {passwordError && <div className="error">{passwordError}</div>}
         <button type="submit">Register</button>
+        <br></br>
+        <div>already have account? <a style={{ textDecoration: "underline", color: "blue" }} onClick={backToLogin}>Login</a></div>
       </form>
     </div>
   );

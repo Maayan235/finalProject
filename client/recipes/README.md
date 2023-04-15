@@ -70,7 +70,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 TODO:
-1. installations
+1. installations:
 2. recipe images
 3. npm install mongodb express cors dotenv
 4. npm i react-speech-recognition
@@ -80,4 +80,5 @@ TODO:
 8. npm install react-icons --save
 9. npm install --save styled-components
 10. npm i react-router-dom
+11. password encryption
 

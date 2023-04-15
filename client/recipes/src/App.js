@@ -53,12 +53,6 @@ function App() {
       )}
     </BrowserRouter>
     </div>
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={userId ? <BasicStructure userId={userId} onLogout={handleLogout}/> : <Login onLogin={handleLogin} />} />
-    //     <Route path="/register" element={<Register />} />
-    //   </Routes>
-    // </BrowserRouter>
   );
 }  
 
