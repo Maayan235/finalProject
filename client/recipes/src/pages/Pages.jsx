@@ -8,18 +8,20 @@ import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom'
 import Popular from "../components/Popular";
 import AddRecipe from './AddRecipe'
 import Favorites from "./Favorites";
+import MyRecipes from "./MyRecipes";
 
 
-function Pages() {
+function Pages({userId}) {
   return (
 
     <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home userId={userId} />} />
         <Route path='/cuisine/:type' element={<Cuisine />} />
         <Route path='/searched/:search' element={<Searched />} />
         <Route path ='/recipe/:name' element={<Recipe />} />
-        <Route path ='/addRecipe' element={<AddRecipe />} />
-        <Route path ='/favorites' element={<Favorites />} />
+        <Route path ='/addRecipe' element={<AddRecipe userId={userId} />} />
+        <Route path ='/favorites' element={<Favorites userId={userId} />} />
+        <Route path ='/myrecipes' element={<MyRecipes userId={userId} />} />
     </Routes>
   );
 }

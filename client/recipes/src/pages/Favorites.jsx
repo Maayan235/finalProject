@@ -5,42 +5,43 @@ import { Link } from "react-router-dom";
 import '../components/Card.css'
 import RecipeCard from "../components/RecipeCard";
 
-function Favorites() {
+function Favorites({userId}) {
 
     const [Favorites, setFavorites] = useState([]);
-    useEffect(() => {
-        getFavorites();
-    }, []);
 
+useEffect(() => {
+  async function getFavorites() {
+    const response = await fetch(`http://localhost:5000/users/${userId}`);
+  
+    if (!response.ok) {
+      const message = `An error occured: ${response.statusText}`;
+      window.alert(message);
+      return;
+    }
+  
+    const user = await response.json();
+    const favoritesRecipeIds = user.favoritesRecipes;
+    const favoritesRecipePromises = favoritesRecipeIds.map(async (recipeId) => {
+      const recipeResponse = await fetch(`http://localhost:5000/recipe/${recipeId}`);
+      const recipe = await recipeResponse.json();
+      return recipe;
+    });
+    const favoriteRecipes = await Promise.all(favoritesRecipePromises);
+    setFavorites(favoriteRecipes);
+  }
 
-
-    const getFavorites = async () => {
-        
-        const check = localStorage.getItem('Favorites');
-
-        if(check){
-            setFavorites(JSON.parse(check));
-        } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
-            const data = await api.json();
-
-            localStorage.setItem('Favorites', JSON.stringify(data.recipes));
-            setFavorites(data.recipes);
-            console.log(data);
-        }
-        
-    };
+  getFavorites();
+}, []);
 
     return (
         <div>
-            <h4 >Your favorites recipes:</h4>
+            <h4 >Your favorite recipes:</h4>
             <br></br>
             <div className="card-container">
                 {Favorites && Favorites.map((recipe) => (
                     <div className="card">
                     <RecipeCard recipe = {recipe}/>
                     </div>
-
                 ))}
             </div>
         </div>

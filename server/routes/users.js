@@ -48,4 +48,14 @@ usersRoutes.route("/users/add").post(function (req, res) {
   });
 });
 
+// get user with specific ID
+usersRoutes.route('/users/:id').get(function(req, res) {
+  const db_connect = dbo.getDb("RecipesWebsite");
+  const userId = req.params.id;
+  db_connect.collection('users').findOne({_id: ObjectId(userId)}, function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
 module.exports = usersRoutes;

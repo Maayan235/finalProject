@@ -49,7 +49,7 @@ function Register({afterRegister, backToLogin}) {
     // Check password
     const passwordPattern = /^(?=.*\d)(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
     if (!passwordPattern.test(password)) {
-      setPasswordError('Password must contain at least one uppercase letter, \\n one number, and be at least 8 characters long');
+      setPasswordError('Password must contain at least one uppercase letter, one number, and be at least 8 characters long');
       return;
     }
 

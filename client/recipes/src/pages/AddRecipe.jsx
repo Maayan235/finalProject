@@ -117,6 +117,42 @@ function AddReciepe() {
         <input type="file" onChange={handleRecipePictureChange} />
       </label>
 
+      <label for="food-type">Select Recipe types:</label>
+      <div class="checkbox-group" id="food-type">
+      <div>
+        <input type="checkbox" id="veggie" name="veggie" value="veggie"/>
+        <label for="veggie">Veggie</label>
+
+        <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian"/>
+        <label for="vegetarian">Vegetarian</label>
+
+        <input type="checkbox" id="kosher" name="kosher" value="kosher"/>
+        <label for="kosher">Kosher</label>
+		  </div>
+
+		<div>
+			<input type="checkbox" id="meat" name="meat" value="meat"/>
+			<label for="meat">Meat</label>
+
+			<input type="checkbox" id="dairy" name="dairy" value="dairy"/>
+			<label for="dairy">Dairy</label>
+
+			<input type="checkbox" id="italian" name="italian" value="italian"/>
+			<label for="italian">Italian</label>
+		</div>
+
+		<div>
+			<input type="checkbox" id="thai" name="thai" value="thai"/>
+			<label for="thai">Thai</label>
+
+			<input type="checkbox" id="american" name="american" value="american"/>
+			<label for="american">American</label>
+
+			<input type="checkbox" id="japanese" name="japanese" value="japanese"/>
+			<label for="japanese">Japanese</label>
+		</div>
+    </div>
+
       <input className="margin-top" type="submit" value="Submit Recipe"/>
     </FormWrapper >
   );

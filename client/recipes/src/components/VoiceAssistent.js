@@ -80,7 +80,7 @@ import React, { useState } from 'react';
         instText =  instructions[counter]
         setInstructionsCounter(instructionsCounter - 1)
       }else if(action === "finish"){
-        instText = "The reading is over."
+        instText = "The reading is over, hope you enjoyed Audio Chef."
         setInstructionsCounter(0)
         toContinue = false
       }

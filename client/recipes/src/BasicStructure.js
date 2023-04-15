@@ -38,6 +38,7 @@ function BasicStructure({ userId, onLogout }) {
         <div className="sidenav">
           <a href="/">Home</a>
           <a href='/favorites'>Favorites</a>
+          <a href='/myrecipes'>My Recipes</a>
           <a href="#categories" onClick={toggleCategories}>
              {showCategories ? <FaChevronUp /> : <FaChevronDown />} All Recipes
             {showCategories ? (
@@ -54,7 +55,7 @@ function BasicStructure({ userId, onLogout }) {
         
         <div className="main-wrapper">
           <div class="main">
-            <Pages />
+            <Pages userId={userId}/>
           </div>
         </div>
 
