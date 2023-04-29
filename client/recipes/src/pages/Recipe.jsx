@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import VoiceAssistent from '../components/VoiceAssistent';
-import { FaRegStar, FaStar, FaEdit, FaTrash } from "react-icons/fa";
+import { FaRegStar, FaStar, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { AiOutlineStar } from 'react-icons/ai';
 import favoriteBtn from '../images/favorite_icon.png'
 import favoriteBtnActive from '../images/favorite_icon_active.png'
@@ -16,20 +16,20 @@ function Recipe({userId}) {
   const [recipe, setRecipe] = useState([]);
   const [activeTab, setActiveTab] = useState("instructions");
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   // const instructionsCopy = [...recipe.instructions];
 
 
   let params = useParams();
 
-  // const openPopup = () => {
-  //   setShowPopup(true);
-  // }
+  const openPopup = () => {
+    setShowPopup(true);
+  }
 
-  // const closePopup = () => {
-  //   setShowPopup(false);
-  // }
+  const closePopup = () => {
+    setShowPopup(false);
+  }
 
 
   const handleFavoriteClick = () => {
@@ -93,7 +93,7 @@ function Recipe({userId}) {
 
 
       <div>
-        <VoiceAssistent instructions = {recipe.instructions}/>
+        <VoiceAssistent instructions = {recipe.instructions} openPopup={openPopup}/>
         <div className="button-container">
           <button className={activeTab === "instructions" ? "active" : ""} onClick={() => setActiveTab("instructions")}> Instructions </button>
           <button className={activeTab === "ingredients" ? "active" : ""} onClick={() => setActiveTab("ingredients")}> Ingredients </button>
@@ -115,6 +115,17 @@ function Recipe({userId}) {
           <li>{ingridient}</li>
         ))}
       </ul>
+      )}
+
+      {showPopup && (
+      <div className="popup">
+        <p>Please say:</p>
+          <p><b>"next"</b> for next line</p>
+          <p><b>"back"</b> for previous line</p>
+          <p><b>"again"</b> to hear the line again</p>
+          <p><b>"finish"</b> to finish the recipe reading</p>
+        <button onClick={closePopup} className="close"><FaTimes/></button>
+      </div>
       )}
     </div>
 
@@ -217,7 +228,38 @@ const DetailWrapper = styled.div`
     width: 10%;
     border: none;
   }
+
+  .popup {
+    position: fixed;
+    top: 4rem;
+    right: 2rem;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+  }
+
+  .popup p {
+    margin-bottom: 1rem;
+  }
+
+  .popup button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    width: 20%;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: gray;
+  }
+  
+
 `;
+
 
 
 

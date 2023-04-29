@@ -46,6 +46,7 @@ import React, { useState } from 'react';
 
 
     const startReading = async() =>{
+      props.openPopup();
       var instText = instructions[0]
       setInstructionsCounter(1)
       utterance.text = instText
@@ -145,18 +146,7 @@ import React, { useState } from 'react';
     <div className="container">
     <button onClick={startReading} className='start'>START READING!</button>
 
-    {/*{showPopup && (
-      <div className="popup">
-        <p>Say:</p>
-        <ul>
-          <li>"next" for next line</li>
-          <li>"back" for previous line</li>
-          <li>"again" to hear the line again</li>
-          <li>"finish" to finish the recipe reading</li>
-        </ul>
-        <button onClick={closePopup} className="close">X</button>
-      </div>
-    )}*/}
+
   </div>
   );
 }; 

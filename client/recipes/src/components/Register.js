@@ -81,6 +81,7 @@ function Register({afterRegister, backToLogin}) {
 
   return (
     <div className="register-container">
+      <br></br>
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label className='my-font' htmlFor="username">Username:</label>

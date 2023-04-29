@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
-function AddReciepe() {
+function AddReciepe({userId}) {
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState([""]);
   const [recipePicture, setRecipePicture] = useState(null);
@@ -153,7 +153,7 @@ function AddReciepe() {
 		</div>
     </div>
 
-      <input className="margin-top" type="submit" value="Submit Recipe"/>
+      <input className="margin-top" id="save_btn" type="submit" value="Save"/>
     </FormWrapper >
   );
 
@@ -165,13 +165,12 @@ const FormWrapper = styled.form`
   flex-direction: column;
   align-items: center;
   margin: 1rem auto;
+  margin-bottom: 4rem;
   max-width: 900px;
   width: 85%;
   padding: 2rem;
   background-color: white;
   border-radius: 1rem;
-  justify-content: center;
-  min-height: 150vh;
 
   label {
     display: flex;
@@ -219,9 +218,18 @@ const FormWrapper = styled.form`
     margin-top: 1rem;
   }
 
-  button[type='submit'] {
+  #save_btn {
     margin-top: 2rem;
     background-color: #f06a44;
+    color: white;
+    border: none;
+    padding: 1rem 1rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    margin: 1rem 0.5rem;
+    cursor: pointer;
+    width: 200px;
+    font-size: 1.2rem;
   }
 
   input[type='file'] {

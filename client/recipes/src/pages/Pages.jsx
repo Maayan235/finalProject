@@ -16,9 +16,9 @@ function Pages({userId}) {
 
     <Routes>
         <Route path='/' element={<Home userId={userId} />} />
-        <Route path='/cuisine/:type' element={<Cuisine />} />
-        <Route path='/searched/:search' element={<Searched />} />
-        <Route path ='/recipe/:name' element={<Recipe />} />
+        <Route path='/cuisine/:type' element={<Cuisine userId={userId}/>} />
+        <Route path='/searched/:search' element={<Searched userId={userId}/>} />
+        <Route path ='/recipe/:name' element={<Recipe userId={userId}/>} />
         <Route path ='/addRecipe' element={<AddRecipe userId={userId} />} />
         <Route path ='/favorites' element={<Favorites userId={userId} />} />
         <Route path ='/myrecipes' element={<MyRecipes userId={userId} />} />
