@@ -5,25 +5,44 @@ import { useParams } from 'react-router-dom'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import VoiceAssistent from '../components/VoiceAssistent';
-import { FaRegStar, FaStar } from "react-icons/fa";
+import { FaRegStar, FaStar, FaEdit, FaTrash } from "react-icons/fa";
 import { AiOutlineStar } from 'react-icons/ai';
 import favoriteBtn from '../images/favorite_icon.png'
 import favoriteBtnActive from '../images/favorite_icon_active.png'
 
 
-function Recipe() {
+function Recipe({userId}) {
 
   const [recipe, setRecipe] = useState([]);
   const [activeTab, setActiveTab] = useState("instructions");
   const [isFavorite, setIsFavorite] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
+
   // const instructionsCopy = [...recipe.instructions];
+
+
+  let params = useParams();
+
+  // const openPopup = () => {
+  //   setShowPopup(true);
+  // }
+
+  // const closePopup = () => {
+  //   setShowPopup(false);
+  // }
 
 
   const handleFavoriteClick = () => {
     setIsFavorite(!isFavorite);
   }
 
-  let params = useParams();
+  const handleEditClick = () => {
+    // handle edit logic
+  }
+
+  const handleDeleteClick = () => {
+    // handle delete logic
+  }
 
   // const instructionsList = ['step one','Add 500 ml of water and mix well. jump on one leg, put your finger on your tongue', 'step three.' ]
   // const ingridients = ['water, bla ,blabla' ]
@@ -61,6 +80,12 @@ function Recipe() {
         <img src={favoriteBtnActive}></img>
       )}
       </div>
+      <div className="edit-icon" onClick={handleEditClick}>
+          <FaEdit />
+       </div>
+       <div className="delete-icon" onClick={handleDeleteClick}>
+          <FaTrash />
+        </div>  
       <div>
       
       </div>
@@ -110,10 +135,9 @@ const DetailWrapper = styled.div`
   border-radius: 1rem;
   position: relative;
 
-
   .top {
     display: flex;
-    align-items: center;    
+    align-items: center;
   }
 
   h2 {
@@ -125,10 +149,8 @@ const DetailWrapper = styled.div`
     width: 35%;
     height: 35%;
     border-radius: 15%;
-    border: 6px solid rgb(226, 217, 207)
-
+    border: 6px solid rgb(226, 217, 207);
   }
-
 
   .button-container {
     display: flex;
@@ -137,7 +159,7 @@ const DetailWrapper = styled.div`
   }
 
   button {
-    background-color:  rgb(226, 217, 207);
+    background-color: rgb(226, 217, 207);
     color: white;
     border: none;
     padding: 1rem 1rem;
@@ -150,33 +172,53 @@ const DetailWrapper = styled.div`
   }
 
   .button-container button.active {
-    background-color:#40555a;
+    background-color: #40555a;
   }
 
   .start {
     display: block;
     margin: 1rem auto;
     background-color: #f06a44;
-}
+  }
 
+  .favorite-icon {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+    display: block;
+    width: 10%;
+    border: none;
+  }
 
-.favorite-icon {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  cursor: pointer;
-  display: block;
-  width:20%;
-  border:none;
-}
+  img {
+    width: 30%;
+    height: 30%;
+  }
 
-img{
-  width: 30%;
-  height: 30%;
-}
+  .edit-icon {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 0.6rem;
+    left: 7%;
+    cursor: pointer;
+    display: block;
+    width: 10%;
+    border: none;
+  }
 
-
+  .delete-icon {
+    font-size: 1.2rem;
+    position: absolute;
+    top: 0.9rem;
+    left: 12%;
+    cursor: pointer;
+    display: block;
+    width: 10%;
+    border: none;
+  }
 `;
+
 
 
 

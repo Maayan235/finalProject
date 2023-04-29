@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {GiKnifeFork} from "react-icons/gi";
 import { Link } from "react-router-dom";
 import img from './images/header4.jpg'
-import logo from './images/logo.jpg'
+import logo2 from './images/logo2.jpg'
 import './BasicStructure.css'
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
@@ -29,13 +29,15 @@ function BasicStructure({ userId, onLogout }) {
     <div className="BasicStructure">
       <div className="nav-wrapper">
         <Nav class="nav">
-          <Link to="/">
-            <img src={logo} alt="AudioChecf" className="logo" />
-          </Link>
+          <Search/>
+          <a onClick ={onLogout} href="/" className="logout-link">Log out</a>
         </Nav>
       </div>
 
         <div className="sidenav">
+        <Link to="/">
+        <img src={logo2} alt="AudioChecf" className="logo" />
+      </Link>
           <a href="/">Home</a>
           <a href='/favorites'>Favorites</a>
           <a href='/myrecipes'>My Recipes</a>
@@ -65,25 +67,23 @@ function BasicStructure({ userId, onLogout }) {
 }
 
 const Logo = styled(Link)`
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 40px;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 400;
-  font-family: 'Lobster Two', cursive;
 `
 
 const Nav = styled.div`
-  padding: 1rem 0rem;
-  position: fixed !important;
+  padding: 1.5rem 0rem;
+  position: fixed !importants;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 0;
   justify-content: flex-start;
   align-items: center;
-  background-color: #cccccc;
-  background-image: url(${img});
+  background-color: white;
 `
 
 export default BasicStructure;

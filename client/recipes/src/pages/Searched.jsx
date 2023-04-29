@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import '../components/Card.css'
+import Search from '../components/Search';
 
 function Searched() {
 
@@ -48,6 +49,7 @@ function Searched() {
   return (
 
     <div>
+        <Search />
         <div className="card-container">
             {searchedRecipes && searchedRecipes.length > 0 ? (
                 searchedRecipes.map((recipe) => (
@@ -56,7 +58,7 @@ function Searched() {
                 </div>
              ))
 ) : (
-  <h3>No results</h3>
+  <h3>No results...</h3>
 )}
         </div>
     </div>

@@ -56,14 +56,6 @@ function App() {
   );
 }  
 
-const Logo = styled(Link)`
-  width: 20px;
-  height: 20px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: 'Lobster Two', cursive;
-`
 
 const Nav = styled.div`
   padding: 1rem 0rem;

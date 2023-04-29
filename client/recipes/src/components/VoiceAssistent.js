@@ -4,10 +4,8 @@ import React, { useState } from 'react';
   import { useSpeechSynthesis } from 'react-speech-kit';
   import {useEffect} from 'react';
   import { act } from 'react-dom/test-utils';
+  import './VoiceAssistent.css';
 
-
-
-    
   const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
 );
@@ -45,6 +43,8 @@ import React, { useState } from 'react';
     const waitSome = async (ml) =>{
       await delay(ml)
     }
+
+
     const startReading = async() =>{
       var instText = instructions[0]
       setInstructionsCounter(1)
@@ -59,6 +59,8 @@ import React, { useState } from 'react';
         listenContinuously();
     
   }
+
+
     const read_Next_Instruction = async (action) =>{
       resetTranscript()
       let toContinue = true
@@ -140,12 +142,22 @@ import React, { useState } from 'react';
     }
     
   return (
-     <div> 
-  
-        {/*<p>Microphone: {listening ? 'on' : 'off'}</p>*/}
-        <button onClick={startReading} className='start'>START READING!</button>
-  
-    </div>
+    <div className="container">
+    <button onClick={startReading} className='start'>START READING!</button>
+
+    {/*{showPopup && (
+      <div className="popup">
+        <p>Say:</p>
+        <ul>
+          <li>"next" for next line</li>
+          <li>"back" for previous line</li>
+          <li>"again" to hear the line again</li>
+          <li>"finish" to finish the recipe reading</li>
+        </ul>
+        <button onClick={closePopup} className="close">X</button>
+      </div>
+    )}*/}
+  </div>
   );
 }; 
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import React from 'react'
 import Category from "../components/Category";
 import Search from "../components/Search";
+import styled from "styled-components";
 
 function Home({userId}) {
 
@@ -29,14 +30,28 @@ function Home({userId}) {
   }, []);
 
   return (
-    <div>
-        <h4 >Hello {username}, what would you like to cook today?</h4>
+    <Wrapper>
+        <HomeText>Hello, {username}! What would you like to cook today?</HomeText>
         <br></br>
-        <Search />
         <Category />
+        <br></br>
         <Popular />
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 1rem;
+`;
+
+const HomeText = styled.h2`
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #40555a;
+`;
 
 export default Home;

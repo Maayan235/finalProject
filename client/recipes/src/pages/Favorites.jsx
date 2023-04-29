@@ -35,7 +35,7 @@ useEffect(() => {
 
     return (
         <div>
-            <h4 >Your favorite recipes:</h4>
+            <h4 >Favorites:</h4>
             <br></br>
             <div className="card-container">
                 {Favorites && Favorites.map((recipe) => (

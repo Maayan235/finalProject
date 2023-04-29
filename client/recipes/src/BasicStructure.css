@@ -1,6 +1,6 @@
 body {
     font-family: "Lato", sans-serif;
-    background-color: rgb(226, 217, 207);
+    background-color: rgb(247, 245, 242);
   }
   
   
@@ -13,14 +13,14 @@ body {
   }
   
   .sidenav a:hover {
-    color: #ada0a0;
+    color: rgb(247, 245, 242);
   }
   
   .logo {
-    width: 150px;
-    height: 150px;
-    padding: 10px;
-    border-radius: 20%;
+    width: 90%;
+    height: 90%;
+    /* padding: 10px; */
+
     
   }
 
@@ -30,20 +30,21 @@ body {
   }
 
   .sidenav {
-    background-color: #f1f1f1;
+    background-color: #dfd8c8;;
     height: 100%;
     width: 220px;
     position: fixed;
-    z-index: 1;
+    z-index: 5;
     top: 0;
     left: 0;
     overflow-x: hidden;
-    padding-top: 200px;
+    padding-top: 30px;
     display: flex;
     flex-direction: column;
   }
   
   .main {
+    top:0;
     margin-left: 220px; /* Same as the width of the sidebar */
     padding: 0px 10px;
     display: flex;
@@ -56,11 +57,25 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 5;
   }
   
   .main-wrapper {
-    padding-top: 200px;
+    padding-top: 50px;
     
+  }
+
+  .nav-wrapper {
+    position: relative;
+  }
+  
+  .logout-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    text-decoration: underline;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
   }
 

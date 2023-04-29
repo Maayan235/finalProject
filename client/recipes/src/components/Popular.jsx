@@ -33,7 +33,7 @@ function Popular() {
 
     return (
         <div>
-            <h4 >Recommended for you:</h4>
+            <HomeText >Recommended for you:</HomeText>
             <br></br>
             <div className="card-container">
                 {popular.map((recipe) => (
@@ -50,6 +50,14 @@ function Popular() {
 
 const Wrapper = styled.div`
 margin: 4rem 0rem;`
+
+const HomeText = styled.h2`
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #40555a;
+`;
 
 
 export default Popular;
