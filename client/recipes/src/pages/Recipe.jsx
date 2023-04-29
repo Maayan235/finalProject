@@ -16,7 +16,8 @@ function Recipe({userId}) {
   const [recipe, setRecipe] = useState([]);
   const [activeTab, setActiveTab] = useState("instructions");
   const [isFavorite, setIsFavorite] = useState(false);
-  // const [showPopup, setShowPopup] = useState(false);
+  const [recipeImageUrl, setRecipeImageUrl] = useState(null);
+
 
   // const instructionsCopy = [...recipe.instructions];
 
@@ -59,6 +60,9 @@ function Recipe({userId}) {
     
         const recipe = await response.json();
         setRecipe(recipe);
+        // assume recipe.image is a base64-encoded image string
+        const imageData = atob(recipe.image);
+        setRecipeImageUrl(`data:${recipe.imageFormat};base64,${imageData}`);
     }
     if (params.name) {
       getRecipe(params.name);
@@ -72,7 +76,7 @@ function Recipe({userId}) {
     <DetailWrapper>
     <div className='top'>
       <h2>{recipe.title}</h2>
-      <img class= "recipeImg"src={recipe.image} alt="" />
+      <img class= "recipeImg"src={recipeImageUrl} alt="" />
       <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
       {isFavorite ? (
         <img src={favoriteBtn}></img>

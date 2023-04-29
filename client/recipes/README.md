@@ -81,5 +81,7 @@ TODO:
 9. npm install --save styled-components
 10. npm i react-router-dom
 11. password encryption
-12. nom install bcrypt
+12. npm install bcrypt
+13. npm install multer
+
 
