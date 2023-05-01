@@ -9,6 +9,8 @@ import { FaRegStar, FaStar, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { AiOutlineStar } from 'react-icons/ai';
 import favoriteBtn from '../images/favorite_icon.png'
 import favoriteBtnActive from '../images/favorite_icon_active.png'
+import { Link } from "react-router-dom";
+
 
 
 function Recipe({userId}) {
@@ -17,6 +19,7 @@ function Recipe({userId}) {
   const [activeTab, setActiveTab] = useState("instructions");
   const [isFavorite, setIsFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [isMyRecipe, setIsMyRecipe] = useState(false);
 
   // const instructionsCopy = [...recipe.instructions];
 
@@ -42,12 +45,37 @@ function Recipe({userId}) {
 
   const handleDeleteClick = () => {
     // handle delete logic
+    // Maayan
   }
 
   // const instructionsList = ['step one','Add 500 ml of water and mix well. jump on one leg, put your finger on your tongue', 'step three.' ]
   // const ingridients = ['water, bla ,blabla' ]
 
   useEffect(() => {
+    
+    async function checkIfMyRecipe(recipeId) {
+      const response = await fetch(`http://localhost:5000/users/${userId}`);
+  
+      if (!response.ok) {
+        const message = `An error occured: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
+  
+      const user = await response.json();
+      const myRecipes = user.myRecipes;
+      const favoriteRecipes = user.favoritesRecipes;
+
+      if (myRecipes.includes(recipeId)) {
+        setIsMyRecipe(true);
+      } 
+      if (favoriteRecipes.includes(recipeId)) {
+        setIsFavorite(true);
+      } 
+
+    
+    }
+    
     async function getRecipe(name) {
         const response = await fetch(`http://localhost:5000/recipe/${name}`);
     
@@ -59,7 +87,10 @@ function Recipe({userId}) {
     
         const recipe = await response.json();
         setRecipe(recipe);
+        checkIfMyRecipe(recipe._id)
     }
+
+
     if (params.name) {
       getRecipe(params.name);
     }
@@ -80,14 +111,22 @@ function Recipe({userId}) {
         <img src={favoriteBtnActive}></img>
       )}
       </div>
-      <div className="edit-icon" onClick={handleEditClick}>
-          <FaEdit />
-       </div>
-       <div className="delete-icon" onClick={handleDeleteClick}>
-          <FaTrash />
-        </div>  
+
+
+      {isMyRecipe && (
+        <div>
+        <Link to={`/editRecipe/${recipe._id}`}>
+          <div className="edit-icon" onClick={handleEditClick}><FaEdit /></div>
+        </Link>
+
+        <Link to="/">
+          <div className="delete-icon" onClick={handleDeleteClick}><FaTrash /></div>
+        </Link>
+        </div>
+        
+        )}
+
       <div>
-      
       </div>
     </div>
 
@@ -216,6 +255,7 @@ const DetailWrapper = styled.div`
     display: block;
     width: 10%;
     border: none;
+    color: black;
   }
 
   .delete-icon {
@@ -227,6 +267,7 @@ const DetailWrapper = styled.div`
     display: block;
     width: 10%;
     border: none;
+    color: black;
   }
 
   .popup {

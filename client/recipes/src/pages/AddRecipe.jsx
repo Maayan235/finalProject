@@ -1,17 +1,50 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router";
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom'
+import Switch from "react-switch";
+
 
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
 function AddReciepe({userId}) {
+  const [edit, setEdit] = useState(false);
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState([""]);
   const [recipePicture, setRecipePicture] = useState(null);
   const [instructions, setInstructions] = useState([""]);
-  const [tags, setTags] = useState([""]);
-  const [types, setTypes] = useState([""]);
+  const [tags, setTags] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [isPublished, setIsPublished] = useState(false);
+
+
+  let params = useParams();
+
+    // This method fetches the records from the database.
+    useEffect(() => {
+      async function getRecipe(recipeId) {
+        const response = await fetch(`http://localhost:5000/recipe/${recipeId}`);
+    
+        if (!response.ok) {
+            const message = `An error occured: ${response.statusText}`;
+            window.alert(message);
+            return;
+        }
+    
+        const recipe = await response.json();
+        setRecipeTitle(recipe.title)
+        setIngredients(recipe.ingredients)
+        setRecipePicture(recipe.image)
+        setInstructions(recipe.instructions)
+        // Maayan: add setIsPublished(recipe.publish) after adding publish to DB
+      }
+       if (params.id) {
+        setEdit(true);
+        getRecipe(params.id)
+       }
+
+    }, [params.id]);
 
   const handleInstructionChange = (idx, e) => {
     const newInstructions = [...instructions];
@@ -41,6 +74,29 @@ function AddReciepe({userId}) {
     setRecipePicture(event.target.files[0]);
   };
 
+  const handleTypeChange = (event) => {
+    const type = event.target.value;
+    if (event.target.checked) {
+      setTypes([...types, type]);
+    } else {
+      setTypes(types.filter((t) => t !== type));
+    }
+  };
+
+
+  function handlePublishChange(checked) {
+    setIsPublished(checked);
+  }
+  
+  const handleTagChange = (event) => {
+    const tag = event.target.value;
+    if (event.target.checked) {
+      setTags([...tags, tag]);
+    } else {
+      setTags(tags.filter((t) => t !== tag));
+    }
+  };
+
   const newRecipe = {
     title: recipeTitle,
     ingredients: ingredients,
@@ -48,6 +104,7 @@ function AddReciepe({userId}) {
     image: recipePicture,
     tags: tags,
     types: types
+    // Maayan: add publish: isPublished (isPublished exists) after adding publish to DB
   };
 
   async function handleSubmit(e) {
@@ -119,40 +176,43 @@ function AddReciepe({userId}) {
 
       <label for="food-type">Select Recipe types:</label>
       <div class="checkbox-group" id="food-type">
-      <div>
-        <input type="checkbox" id="veggie" name="veggie" value="veggie"/>
-        <label for="veggie">Veggie</label>
-
-        <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian"/>
-        <label for="vegetarian">Vegetarian</label>
-
-        <input type="checkbox" id="kosher" name="kosher" value="kosher"/>
-        <label for="kosher">Kosher</label>
-		  </div>
-
-		<div>
-			<input type="checkbox" id="meat" name="meat" value="meat"/>
-			<label for="meat">Meat</label>
-
-			<input type="checkbox" id="dairy" name="dairy" value="dairy"/>
-			<label for="dairy">Dairy</label>
-
-			<input type="checkbox" id="italian" name="italian" value="italian"/>
-			<label for="italian">Italian</label>
-		</div>
-
-		<div>
-			<input type="checkbox" id="thai" name="thai" value="thai"/>
-			<label for="thai">Thai</label>
-
-			<input type="checkbox" id="american" name="american" value="american"/>
-			<label for="american">American</label>
-
-			<input type="checkbox" id="japanese" name="japanese" value="japanese"/>
-			<label for="japanese">Japanese</label>
-		</div>
-    </div>
-
+        <div>
+          <input type="checkbox" id="veggie" name="veggie" value="veggie" onChange={handleTagChange}/>
+          <label for="veggie">Veggie</label>
+  
+          <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian" onChange={handleTagChange}/>
+          <label for="vegetarian">Vegetarian</label>
+  
+          <input type="checkbox" id="kosher" name="kosher" value="kosher" onChange={handleTagChange}/>
+          <label for="kosher">Kosher</label>
+        </div>
+  
+        <div>
+          <input type="checkbox" id="meat" name="meat" value="meat" onChange={handleTagChange}/>
+          <label for="meat">Meat</label>
+  
+          <input type="checkbox" id="dairy" name="dairy" value="dairy" onChange={handleTagChange}/>
+          <label for="dairy">Dairy</label>
+  
+          <input type="checkbox" id="italian" name="italian" value="italian" onChange={handleTypeChange}/>
+          <label for="italian">Italian</label>
+        </div>
+  
+        <div>
+          <input type="checkbox" id="thai" name="thai" value="thai" onChange={handleTypeChange}/>
+          <label for="thai">Thai</label>
+  
+          <input type="checkbox" id="american" name="american" value="american" onChange={handleTypeChange}/>
+          <label for="american">American</label>
+  
+          <input type="checkbox" id="japanese" name="japanese" value="japanese" onChange={handleTypeChange}/>
+          <label for="japanese">Japanese</label>
+        </div>
+      </div>
+      <label>
+        <div className="margin-top">would you like to publish the recipe for everyone?</div>
+        <Switch checked={isPublished} onChange={handlePublishChange} />
+      </label>
       <input className="margin-top" id="save_btn" type="submit" value="Save"/>
     </FormWrapper >
   );
