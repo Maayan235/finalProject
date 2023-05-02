@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import '../components/Card.css'
 import RecipeCard from "../components/RecipeCard";
 
+
 function Favorites({userId}) {
 
     const [Favorites, setFavorites] = useState([]);
@@ -48,9 +49,6 @@ useEffect(() => {
 
     )
 }
-
-const Wrapper = styled.div`
-margin: 4rem 0rem;`
 
 
 export default Favorites;

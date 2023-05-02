@@ -5,7 +5,7 @@ import Searched from "./Searched";
 import Recipe from "./Recipe";
 import React from 'react'
 import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom'
-import Popular from "../components/Popular";
+import Recommended from "../components/Recommended";
 import AddRecipe from './AddRecipe'
 import Favorites from "./Favorites";
 import MyRecipes from "./MyRecipes";

@@ -1,11 +1,12 @@
 import Veggie from "../components/Veggie";
-import Popular from "../components/Popular";
+import Recommended from "../components/Recommended";
 import { useEffect, useState } from 'react';
 import React from 'react'
 import Category from "../components/Category";
 import Search from "../components/Search";
 import styled from "styled-components";
-import AudioChefImg from "../images/chef2.png";
+import AudioChefImg from "../images/homePageImg3.jpg";
+import RecentRecipes from "../components/recentRecipes";
 
 function Home({userId}) {
 
@@ -32,18 +33,13 @@ function Home({userId}) {
 
   return (
     <Wrapper>
-      <ContentWrapper>
-        <ImageWrapper>
-          <AudioChefCover src={AudioChefImg} alt="AudioChef" />
-        </ImageWrapper>
-        <TextWrapper>
-          <Slogan>Cook with your ears, not just your eyes - Welcome to AudioChef!</Slogan>
-          
-        </TextWrapper>
-      </ContentWrapper>
+      <AudioChefCover src={AudioChefImg} alt="AudioChef" />
       <HomeText>Hello, {username}! What would you like to cook today?</HomeText>
       <Category />
-      <Popular />
+      <br></br>
+      <Recommended />
+      <br></br>
+      <RecentRecipes />
     </Wrapper>
   );
 }
@@ -65,17 +61,6 @@ const TextWrapper = styled.div`
   flex-basis: 60%;
 `;
 
-const ImageWrapper = styled.div`
-  flex-basis: 40%;
-`;
-
-const AudioChefCover = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-`;
 
 const Slogan = styled.p`
   margin-top: 0;
@@ -86,10 +71,25 @@ const Slogan = styled.p`
 
 const HomeText = styled.h2`
   font-size: 1.5rem;
-  font-weight: bold;
-  text-align: left;
-  margin-top: 1.5rem;
-  color: #40555a;
+  text-align: center;
+  color: #333;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  margin-bottom:2rem;
+  font-family: 'Frank Ruhl Libre', serif;
+`;
+
+const ImageWrapper = styled.div`
+  flex-basis: 100%;
+`;
+
+const AudioChefCover = styled.img`
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  height: auto;
 `;
 
 export default Home;

@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import './Card.css'
 import RecipeCard from "./RecipeCard";
 
-function Popular() {
-
+function Recommended() {
+// needs to be changes to recommended instead of populr!!!
     const [popular, setPopular] = useState([]);
     useEffect(() => {
         getPopular();
@@ -52,12 +52,15 @@ const Wrapper = styled.div`
 margin: 4rem 0rem;`
 
 const HomeText = styled.h2`
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #40555a;
+font-family: Georgia;
+font-size: 1.5rem;
+text-align: center;
+color: #333;
+background-color: white;
+padding: 1rem;
+border-radius: 0.2rem;
+box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 `;
 
 
-export default Popular;
+export default Recommended;
