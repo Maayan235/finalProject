@@ -6,3 +6,4 @@ package.json
 package-lock.json
 server/package-lock.json
 server/package.json
+client/recipes/package.json

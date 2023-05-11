@@ -3,6 +3,13 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
+
+
+// get recipies from database.
+//recomandationsMatrix.createMatrix(recipies)
+recomandationsMatrix.createMatrix([{'id' : 7, 'tags' : ["kasher", "veg"], 'ingridients' : ["sugar", "water", "salt"], 'types' : ["italian", "fast"]}])
+console.log(recomandationsMatrix.matrix)
+
 app.use(cors());
 app.use(express.json());
 app.use(require("./routes/recipes"));

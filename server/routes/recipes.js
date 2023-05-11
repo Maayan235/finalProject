@@ -1,3 +1,7 @@
+import Recipe from '../../client/recipes/src/pages/Recipe';
+import RecommendationsMatrix from '../recommendations/recomandationsMatrix';
+import recomandationsMatrix from './recommendations/RecommendationsMatrix'
+
 const express = require("express");
 
 // recordRoutes is an instance of the express router.
@@ -53,6 +57,8 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
   const newRecipe = req.body; // assuming that the request body is a JSON object
   let db_connect = dbo.getDb();
   
+  //RecommendationsMatrix.addReciepeToMatrix(newRecipe,Recipies)
+  //console.log(recomandationsMatrix.matrix)
   db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
     if (err) {
       console.log(err);
