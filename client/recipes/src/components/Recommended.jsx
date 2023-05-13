@@ -1,11 +1,11 @@
 import { useEffect , useState} from "react";
 import styled from "styled-components";
 import '@splidejs/react-splide/css';
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import './Card.css'
 import RecipeCard from "./RecipeCard";
 
-function Recommended() {
+function Recommended(userId) {
 // needs to be changes to recommended instead of populr!!!
     const [popular, setPopular] = useState([]);
     useEffect(() => {
@@ -17,16 +17,16 @@ function Recommended() {
     const getPopular = async () => {
         
         const check = localStorage.getItem('popular');
-
-        if(check){
+        if(!check){
+        //if(check){
             setPopular(JSON.parse(check));
         } else {
-            const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
+            //const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
+            const api = await fetch(`http://localhost:5000/users/recommended/${userId.userId}`);
             const data = await api.json();
-
-            localStorage.setItem('popular', JSON.stringify(data.recipes));
-            setPopular(data.recipes);
-            console.log(data);
+            console.log(data)
+            localStorage.setItem('popular', JSON.stringify(data));
+            setPopular(data);
         }
         
     };

@@ -1,6 +1,5 @@
-import Recipe from '../../client/recipes/src/pages/Recipe';
-import RecommendationsMatrix from '../recommendations/recomandationsMatrix';
-import recomandationsMatrix from './recommendations/RecommendationsMatrix'
+const RecomandationsMatrix = require('../recommendations/recomandationsMatrix.js');
+
 
 const express = require("express");
 
@@ -11,6 +10,8 @@ const recipesRoutes = express.Router();
 
 // This will help us connect to the database
 const dbo = require("../db/tableconn");
+
+
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
@@ -26,6 +27,7 @@ recipesRoutes.route("/recipes").get(function (req, res) {
       res.json(result);
     });
 });
+
 
 // This section will help you get a single record by id
 recipesRoutes.route("/recipe/:id").get(function (req, res) {
@@ -55,16 +57,20 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
 // This section will help you get a list of all the records.
 recipesRoutes.route("/recipes/add").post(function (req, res) {
   const newRecipe = req.body; // assuming that the request body is a JSON object
+  console.log(newRecipe)
   let db_connect = dbo.getDb();
-  
-  //RecommendationsMatrix.addReciepeToMatrix(newRecipe,Recipies)
-  //console.log(recomandationsMatrix.matrix)
   db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
     if (err) {
       console.log(err);
       res.status(400).send(err);
     }
   });
+
+  // Maayan: return the reciepe (with id) in res.
+  RecomandationsMatrix.addReciepeToMatrix(newRecipe)
+  x =RecomandationsMatrix.getMatrix()
+  //console.log(x)
+    
 });
 
 
@@ -89,6 +95,7 @@ recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
       res.json(result);
     });
 });
+
 
 recipesRoutes.route("/recipes/edit/:id").put(function(req, res) {
   const recipeId = req.params.id;

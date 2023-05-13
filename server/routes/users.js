@@ -13,8 +13,23 @@ const ObjectId = require("mongodb").ObjectId;
 
 // This help encrypt the password
 const bcrypt = require('bcrypt');
+const RecommendationsMatrix = require("../recommendations/recomandationsMatrix");
 const saltRounds = 10; // you can adjust the number of salt rounds based on your security requirements
 
+
+
+usersRoutes.route('/users/recommended/:id').get(function(req, res) {
+  let user = {};
+  const db_connect = dbo.getDb("RecipesWebsite");
+  const userId = req.params.id;
+  db_connect.collection('users').findOne({_id: ObjectId(userId)}, function(err, result) {
+    if (err) throw err;
+    json = JSON.stringify(result)
+    user = JSON.parse(json)
+    let recipies = RecommendationsMatrix.topKRecommendedRecipies(user.favoritesRecipes,6)
+    res.json(recipies);
+  });
+});
 
 // This section will help you get a list of all the records.
 usersRoutes.route("/users").get(function (req, res) {

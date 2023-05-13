@@ -83,5 +83,5 @@ npm install node-gyp -g
 npm install bcrypt -g
 npm install bcrypt --save
  npm i react-router-dom
- nפm install bcrypt
+ npm install bcrypt
 

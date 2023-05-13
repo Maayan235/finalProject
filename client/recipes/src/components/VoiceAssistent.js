@@ -54,8 +54,7 @@ import React, { useState } from 'react';
       //speak({language: "he-IL", voice: voices[2], text: instText, })
       let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
       let commas = instText.replace(/[^,]/g, "").length
-    //   console.log("sentences: " + sentences)
-    //   console.log("commas: " + commas)  
+      
         await delay(instText.length * 70 +  sentences * 700 + commas * 350);
         listenContinuously();
     
