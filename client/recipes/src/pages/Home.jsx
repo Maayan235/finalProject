@@ -37,7 +37,7 @@ function Home({userId}) {
       <HomeText>Hello, {username}! What would you like to cook today?</HomeText>
       <Category />
       <br></br>
-      <Recommended />
+      <Recommended userId = {userId}/ >
       <br></br>
       <RecentRecipes />
     </Wrapper>

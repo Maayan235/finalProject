@@ -2,20 +2,21 @@
 
 class RecommendationsMatrix{
     
-    static matrix;
-    static recipies;
+    static matrix =[];
+    static recipies=[];
 
 
     static createMatrix(reciepies){
         this.matrix = [[0,0],[0,0]];
         for(let i = 0; i< reciepies.length; i++){
-            RecommendationsMatrix.addReciepeToMatrix(reciepies[i], reciepies);
+            this.recipies.push(reciepies[i])            
         }
-        this.recipies = reciepies
-    }
-
-    static addReciepeToRecipies(r){
-        this.recipies.push(r)
+        for(let i = 0; i< reciepies.length; i++){
+            RecommendationsMatrix.addReciepeToMatrix(reciepies[i]);
+        }
+        // console.log("*****matrix*****")
+        // console.log(this.matrix)
+        // console.log("*****matrix*****")
     }
     
     static wordsSimilarity(list1, list2) {
@@ -41,28 +42,32 @@ class RecommendationsMatrix{
         // similarity of tags 
         let tagsSimilarity = RecommendationsMatrix.wordsSimilarity(recipe1.tags,recipe2.tags)  
         //similarity of ingridients
-        let ingredientsSimilarity =  RecommendationsMatrix.wordsSimilarity(recipe1.ingridients ,recipe2.ingridients)
-        return (typeSimilarity + tagsSimilarity + 0.4 * ingredientsSimilarity)/ 2.4
+        let ingredientsSimilarity =  RecommendationsMatrix.wordsSimilarity(recipe1.ingredients ,recipe2.ingredients)
+        return parseFloat(((typeSimilarity + tagsSimilarity + 0.4 * ingredientsSimilarity)/ 2.4).toFixed(2))
+    }
+
+    static getMatrix(){
+        return this.matrix
     }
     
     static getSimilarityVector(newReciepe, recipies){
     
         //let newReciepeId = newReciepe.id
-        let simVector = [1,newReciepe.id]
+        let simVector = [1,newReciepe._id]
         for (let i = 2; i < this.matrix.length ; i++){
             if(this.matrix[0][i] != 0){
                 let reciepeId = this.matrix[1][i]
-                simVector.push(RecommendationsMatrix.recipeSimilarity(newReciepe, recipies.find(x => x.id == reciepeId)))
+                simVector.push(RecommendationsMatrix.recipeSimilarity(newReciepe, recipies.find(x => x._id == reciepeId)))
             }
             else{
                 simVector.push(0)
             }
         }
         return simVector
-    }
+    }   
     
-    static addReciepeToMatrix(newReciepe, recipies){
-        
+    static addReciepeToMatrix(newReciepe){
+        this.recipies.push(newReciepe)
         let len, index = this.matrix[0].length
         let addRow = true
         for(let i = 2 ; i< this.matrix[0].length; i++){
@@ -72,7 +77,7 @@ class RecommendationsMatrix{
                 break;
             }
         }
-        let simVector = RecommendationsMatrix.getSimilarityVector(newReciepe,recipies)
+        let simVector = RecommendationsMatrix.getSimilarityVector(newReciepe,this.recipies)
         if(addRow){
             simVector.push(0) // the right bottom coenrer -- the reciepe with himself
             this.matrix.push(simVector)
@@ -87,13 +92,18 @@ class RecommendationsMatrix{
         }
     }
     static findTopKSimilarities(jsonList, k){
-        
+        let toRet = []
         jsonList.sort((a, b) => b.similarity - a.similarity);
         if(jsonList.length > k){
-            return jsonList.slice(0,k)
+            jsonList = jsonList.slice(0,k)
+            //console.log(jsonList)
         }
-        return jsonList
+        for(let i = 0; i< jsonList.length; i++){
+            toRet.push(this.recipies.find(x => x._id == jsonList[i].id))
+        }
+        return toRet
     }
+
     static findMostKSimilarRecipies(recipeId, k){
         let simVector = this.matrix.find(x => x[1] == recipeId)
         let idVector = this.matrix[1]
@@ -106,28 +116,28 @@ class RecommendationsMatrix{
         return(RecommendationsMatrix.findTopKSimilarities(jsonList,k))
     }
     
-    static topKRecommendedRecipies(recipies, favorites, k){
+    static topKRecommendedRecipies(favorites, k){
         if(favorites.length == 0){
             return null
         }
-        favoriteSet =new Set(favorites)
-        simVector = this.matrix.find(x => x[1] == favorites[0])
-        idVector = this.matrix[1]
-        jsonList = [] 
+        let favoriteSet =new Set(favorites)
+        let simVector = this.matrix.find(x => x[1] == favorites[0])
+        let idVector = this.matrix[1]
+        let jsonList = [] 
         
         for(let i = 1; i< favorites.length; i++){
-                currentVector = this.matrix.find(x => x[1] == favorites[i])
+                let currentVector = this.matrix.find(x => x[1] == favorites[i])
                 
                 for(let j = 0; j < currentVector.length; j++){
                     simVector[j] += currentVector[j]
                 }
         }
         for(let i = 2; i< this.matrix[0].length; i++){
-            if(!(favoriteSet.has(idVector[i])) && this.matrix[0][i]){
+            if(!(favoriteSet.has(idVector[i].toString())) && this.matrix[0][i]){
                 jsonList.push({"id" : idVector[i], "similarity" : simVector[i]})
             }
         }
-        return(findTopKSimilarities(jsonList,k))
+        return(RecommendationsMatrix.findTopKSimilarities(jsonList,k))
     }
     
     static removeReciepe(reciepeId){
@@ -141,9 +151,10 @@ class RecommendationsMatrix{
         this.matrix[0][index]= 0
         this.matrix[index][0] = 0
     }
-    
+      
 }
-export default RecommendationsMatrix; 
+module.exports = RecommendationsMatrix
+
 
 /*
 
