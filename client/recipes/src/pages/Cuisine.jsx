@@ -54,7 +54,7 @@ function Cuisine() {
 
     return (
         <div>
-            <h3>{params.type.charAt(0).toUpperCase() + params.type.slice(1)} Food:</h3>
+        <h3>{params.type.charAt(0).toUpperCase() + params.type.slice(1)} Food:</h3>
             <div className="card-container">
                 {recipes && recipes.map((recipe) => (
                     <div className="card">
@@ -67,8 +67,6 @@ function Cuisine() {
         </div>
 
     )
-
-    
 }
 
 

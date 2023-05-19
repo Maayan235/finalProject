@@ -30,6 +30,7 @@ function BasicStructure({ userId, onLogout }) {
       <div className="nav-wrapper">
         <Nav class="nav">
           <Search/>
+
           <a onClick ={onLogout} href="/" className="logout-link">Log out</a>
         </Nav>
       </div>
@@ -84,6 +85,7 @@ const Nav = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 `
 
 export default BasicStructure;

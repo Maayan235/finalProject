@@ -46,6 +46,7 @@ import React, { useState } from 'react';
 
 
     const startReading = async() =>{
+      props.openPopup();
       var instText = instructions[0]
       setInstructionsCounter(1)
       utterance.text = instText
@@ -53,8 +54,7 @@ import React, { useState } from 'react';
       //speak({language: "he-IL", voice: voices[2], text: instText, })
       let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
       let commas = instText.replace(/[^,]/g, "").length
-    //   console.log("sentences: " + sentences)
-    //   console.log("commas: " + commas)  
+      
         await delay(instText.length * 70 +  sentences * 700 + commas * 350);
         listenContinuously();
     
@@ -145,18 +145,7 @@ import React, { useState } from 'react';
     <div className="container">
     <button onClick={startReading} className='start'>START READING!</button>
 
-    {/*{showPopup && (
-      <div className="popup">
-        <p>Say:</p>
-        <ul>
-          <li>"next" for next line</li>
-          <li>"back" for previous line</li>
-          <li>"again" to hear the line again</li>
-          <li>"finish" to finish the recipe reading</li>
-        </ul>
-        <button onClick={closePopup} className="close">X</button>
-      </div>
-    )}*/}
+
   </div>
   );
 }; 

@@ -1,18 +1,19 @@
 html, body{
     height:100%;
+    align-items: center;
 }
 .login-container {
-    height: 100vh;
-    background-image: url(
-        https://thumbs.dreamstime.com/b/greek-food-background-traditional-different-greek-dishes-set-greek-food-background-traditional-different-greek-dishes-set-top-view-178761927.jpg
-                     );
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  height: 100vh;
+  background-color: transparent;
+  background-image: url('../images/loginbackgrou12.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .my-font {
     font-size: 22px;
   }

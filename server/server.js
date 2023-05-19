@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const multer = require("multer");
 
+const multer = require("multer");
+
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 
@@ -20,8 +22,21 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
 
 // other routes
+
+// Set up multer middleware to handle file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file);
+  res.send("File uploaded successfully.");
+});
+
+
+// other routes
 app.use(require("./routes/recipes"));
 app.use(require("./routes/users"));
+
 
 // get driver connection
 const dbo = require("./db/tableconn");

@@ -4,3 +4,7 @@ server/package.json
 server/package-lock.json
 package.json
 package-lock.json
+server/package-lock.json
+server/package.json
+client/recipes/package.json
+client/recipes/.package-lock.json.swp

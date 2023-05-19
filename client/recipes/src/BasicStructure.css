@@ -1,13 +1,12 @@
 body {
-    font-family: "Lato", sans-serif;
-    background-color: rgb(247, 245, 242);
+    background-color: #f7f7f7;
   }
   
   
   .sidenav a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: #493f3f;
     display: block;
   }
@@ -17,11 +16,9 @@ body {
   }
   
   .logo {
-    width: 90%;
+    width: 100%;
     height: 90%;
-    /* padding: 10px; */
-
-    
+   
   }
 
   .nested-list {
@@ -32,7 +29,7 @@ body {
   .sidenav {
     background-color: #dfd8c8;;
     height: 100%;
-    width: 220px;
+    width: 200px;
     position: fixed;
     z-index: 5;
     top: 0;
@@ -61,7 +58,7 @@ body {
   }
   
   .main-wrapper {
-    padding-top: 50px;
+    padding-top: 20px;
     
   }
 
