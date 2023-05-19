@@ -86,5 +86,5 @@ TODO:
 
 12. npm install bcrypt
 13. npm install multer
-
+14. npm install compressorjs
 
