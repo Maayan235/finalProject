@@ -18,8 +18,6 @@ function Recipe({userId}) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [recipeImageUrl, setRecipeImageUrl] = useState(null);
 
-  const [recipeImageUrl, setRecipeImageUrl] = useState(null);
-
 
   // const instructionsCopy = [...recipe.instructions];
 
@@ -62,9 +60,6 @@ function Recipe({userId}) {
     
         const recipe = await response.json();
         setRecipe(recipe);
-        // assume recipe.image is a base64-encoded image string
-        const imageData = atob(recipe.image);
-        setRecipeImageUrl(`data:${recipe.imageFormat};base64,${imageData}`);
         // assume recipe.image is a base64-encoded image string
         const imageData = atob(recipe.image);
         setRecipeImageUrl(`data:${recipe.imageFormat};base64,${imageData}`);
