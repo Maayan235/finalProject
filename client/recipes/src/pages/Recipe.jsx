@@ -78,21 +78,28 @@ function Recipe({userId}) {
     }
     
     async function getRecipe(name) {
+      try {
         const response = await fetch(`http://localhost:5000/recipe/${name}`);
     
         if (!response.ok) {
-            const message = `An error occured: ${response.statusText}`;
-            window.alert(message);
-            return;
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
     
         const recipe = await response.json();
         setRecipe(recipe);
-        checkIfMyRecipe(recipe._id)
-        // assume recipe.image is a base64-encoded image string
-        const imageData = Buffer.from(recipe.image,  'base64').toString();
-        setRecipeImageUrl(`data:${recipe.imageFormat};base64,${imageData}`);
+        checkIfMyRecipe(recipe._id);
+    
+        // Fetch image data and create URL
+        const imageResponse = await fetch(`data:${recipe.imageFormat};base64,${recipe.image}`);
+        const imageBlob = await imageResponse.blob();
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setRecipeImageUrl(imageUrl);
+      } catch (error) {
+        console.error('Error fetching recipe:', error);
+      }
     }
+    
+    
 
 
     if (params.name) {
