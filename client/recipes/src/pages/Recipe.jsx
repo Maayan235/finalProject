@@ -35,6 +35,7 @@ function Recipe({userId}) {
 
   const handleFavoriteClick = () => {
     setIsFavorite(!isFavorite);
+    // Maayan +1 favorites
   }
 
   const handleEditClick = () => {
@@ -61,7 +62,7 @@ function Recipe({userId}) {
         const recipe = await response.json();
         setRecipe(recipe);
         // assume recipe.image is a base64-encoded image string
-        const imageData = atob(recipe.image);
+        const imageData = Buffer.from(recipe.image,  'base64').toString();
         setRecipeImageUrl(`data:${recipe.imageFormat};base64,${imageData}`);
     }
     if (params.name) {
@@ -76,8 +77,7 @@ function Recipe({userId}) {
     <DetailWrapper>
     <div className='top'>
       <h2>{recipe.title}</h2>
-      <img class= "recipeImg"src={recipeImageUrl} alt="" />
-      <img class= "recipeImg"src={recipeImageUrl} alt="" />
+      <img class= "recipeImg" src={recipeImageUrl} alt="" />
       <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
       {isFavorite ? (
         <img src={favoriteBtn}></img>
@@ -223,11 +223,5 @@ const DetailWrapper = styled.div`
     border: none;
   }
 `;
-
-
-
-
-
-
 
 export default Recipe 
