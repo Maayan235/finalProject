@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from 'styled-components';
 import Compressor from 'compressorjs';
-import Compressor from 'compressorjs';
-
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
@@ -11,7 +9,6 @@ function AddReciepe() {
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState([""]);
   const [recipePicture, setRecipePicture] = useState(null);
-  const[recipePictureFormat, setRecipePictureFormat] = useState(null);
   const[recipePictureFormat, setRecipePictureFormat] = useState(null);
   const [instructions, setInstructions] = useState([""]);
   const [tags, setTags] = useState([""]);
@@ -42,34 +39,6 @@ function AddReciepe() {
   };
 
   const handleRecipePictureChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-  
-    reader.readAsDataURL(file);
-    
-    reader.onload = () => {
-      const dataURL = reader.result;
-      const imageFormat = dataURL.split(",")[0].split(":")[1].split(";")[0];
-  
-      // Use Compressor library to reduce image size
-      new Compressor(file, {
-        quality: 0.6,
-        success(result) {
-          const compressedFile = new File([result], file.name, { type: result.type });
-  
-          const reader2 = new FileReader();
-          reader2.readAsDataURL(compressedFile);
-          reader2.onload = () => {
-            const dataURL2 = reader2.result;
-            setRecipePicture(dataURL2);
-            setRecipePictureFormat(imageFormat);
-          };
-        },
-        error(err) {
-          console.log(err.message);
-        },
-      });
-    };
     const file = event.target.files[0];
     const reader = new FileReader();
   
