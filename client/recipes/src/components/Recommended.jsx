@@ -33,19 +33,18 @@ function Recommended(userId) {
 
     return (
         <div>
-            <HomeText >Recommended for you:</HomeText>
-            <br></br>
-            <div className="card-container">
-                {popular.map((recipe) => (
-                    <div className="card">
-                    <RecipeCard recipe = {recipe}/>
-                    </div>
-
-                ))}
-            </div>
+          <HomeText>Recommended for you:</HomeText>
+          <br></br>
+          <div className="card-container">
+            {popular &&
+              popular.map((recipe) => (
+                <div className="card">
+                  <RecipeCard recipe={recipe} />
+                </div>
+              ))}
+          </div>
         </div>
-
-    )
+      );
 }
 
 const Wrapper = styled.div`

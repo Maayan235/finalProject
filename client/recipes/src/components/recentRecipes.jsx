@@ -37,7 +37,7 @@ function Recommended() {
             <HomeText >Recent Recipes:</HomeText>
             <br></br>
             <div className="card-container">
-                {popular.map((recipe) => (
+                {popular && popular.map((recipe) => (
                     <div className="card">
                     <RecipeCard recipe = {recipe}/>
                     </div>
