@@ -9,17 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Set up multer middleware to handle file uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-app.post("/upload", upload.single("file"), (req, res) => {
-  console.log(req.file);
-  res.send("File uploaded successfully.");
-});
-
-
-// other routes
 
 // Set up multer middleware to handle file uploads
 const storage = multer.memoryStorage();
