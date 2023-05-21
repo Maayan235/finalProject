@@ -10,6 +10,7 @@ const recipesRoutes = express.Router();
 
 // This will help us connect to the database
 const dbo = require("../db/tableconn");
+//const { default: RecipeCard } = require('../../client/recipes/src/components/RecipeCard.jsx');
 
 
 
@@ -56,9 +57,11 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
 
 // This section will help you get a list of all the records.
 recipesRoutes.route("/recipes/add").post(function (req, res) {
-  const newRecipe = req.body; // assuming that the request body is a JSON object
+  const newRecipe = req.body;  // assuming that the request body is a JSON object
+  newRecipe.usersCount = 1
   console.log(newRecipe)
   let db_connect = dbo.getDb();
+  //db_connect.collection("recipes").updateMany({}, {$set: {"usersCount": 1}},false,true);
   db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
     if (err) {
       console.log(err);
@@ -97,13 +100,22 @@ recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
 });
 
 
-recipesRoutes.route("/recipes/edit/:id").put(function(req, res) {
-  const recipeId = req.params.id;
+recipesRoutes.route("/recipes/editt").post(function (req, res) {
+  //const recipeId = req.params.id;
+  //console.log(recipeId)
   const updatedRecipe = req.body; // assuming that the request body is a JSON object
-  
+  console.log(updatedRecipe)
   let db_connect = dbo.getDb();
   
-  db_connect.collection("recipes").updateOne({_id: ObjectId(recipeId)}, {$set: updatedRecipe}, function(err, result) {
+  db_connect.collection("recipes").updateOne({_id: ObjectId(updatedRecipe._id)}, 
+  {$set:{
+    title: updatedRecipe.title,
+    ingredients: updatedRecipe.ingredients,
+    instructions: updatedRecipe.instructions,
+    image: updatedRecipe.imagae,
+    tags: updatedRecipe.tags,
+    types: updatedRecipe.types
+  } }, function(err, result) {
     if (err) {
     console.log(err);
     res.status(400).send(err);
@@ -111,23 +123,20 @@ recipesRoutes.route("/recipes/edit/:id").put(function(req, res) {
     res.status(200).send(result);
     }
   });
+  RecomandationsMatrix.updatedRecipe(updatedRecipe)
 });
 
-recipesRoutes.route('/recipes/delete/:id').delete(function(req, res) {
-  const recipeId = req.params.id;
-  
+recipesRoutes.route('/recipes/delete/:rid/:uid').put(function(req, res) {
+  console.log("herr!!")
+  const recipeId = req.params.rid;
+  const userId = req.params.uid;
   let db_connect = dbo.getDb();
-  
-  db_connect.collection('recipes').deleteOne({_id: ObjectId(recipeId)}, function(err, result) {
-      if (err) {
-      console.log(err);
-      res.status(400).send(err);
-      } else {
-      res.status(200).send(result);
-      }
-    });
+  let userRecipes;
+  db_connect.collection('users').updateOne({_id: ObjectId(userId)},
+  { $pull: { myRecipes: recipeId } } )
+    
   });
-
+    
   
 
 

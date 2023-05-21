@@ -18,7 +18,19 @@ class RecommendationsMatrix{
         // console.log(this.matrix)
         // console.log("*****matrix*****")
     }
-    
+    static updatedRecipe(updatedRecipe){
+       let former = this.recipies.find(x => x._id == updatedRecipe._id)
+       if(former == undefined){
+        console.log("no such recipe")
+        return;
+       }
+       former.title = updatedRecipe.title,
+       former.ingredients = updatedRecipe.ingredients,
+       former.instructions = updatedRecipe.instructions,
+       former.image = updatedRecipe.imagae,
+       former.tags= updatedRecipe.tags,
+       former.types = updatedRecipe.types
+    }
     static wordsSimilarity(list1, list2) {
     // Convert the lists to sets to remove duplicates
     const set1 = new Set(list1);

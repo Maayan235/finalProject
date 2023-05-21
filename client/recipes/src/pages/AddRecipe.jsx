@@ -1,18 +1,56 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from 'styled-components';
 import Compressor from 'compressorjs';
+import { useParams } from 'react-router-dom';
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
-function AddReciepe() {
+function AddReciepe({userId}) {
+  const [edit, setEdit] = useState(false);
+  const [recipeId,setRecipeId] = useState("");
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState([""]);
   const [recipePicture, setRecipePicture] = useState(null);
   const[recipePictureFormat, setRecipePictureFormat] = useState(null);
   const [instructions, setInstructions] = useState([""]);
-  const [tags, setTags] = useState([""]);
-  const [types, setTypes] = useState([""]);
+  const [tags, setTags] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [isPublished, setIsPublished] = useState(false);
+
+
+  let params = useParams();
+
+    // This method fetches the records from the database.
+    useEffect(() => {
+      async function getRecipe(recipeId) {
+        const response = await fetch(`http://localhost:5000/recipe/${recipeId}`);
+    
+        if (!response.ok) {
+            const message = `An error occured: ${response.statusText}`;
+            window.alert(message);
+            return;
+        }
+    
+        const recipe = await response.json();
+        // console.log(recipe._id)
+        setRecipeId(recipe._id)
+        setRecipeTitle(recipe.title)
+        setIngredients(recipe.ingredients)
+        setRecipePicture(recipe.image)
+        setInstructions(recipe.instructions)
+        setTags(recipe.tags)
+        setTypes(recipe.types)
+        //setIsPublished(recipe.isPublished)
+        
+        // Maayan: add setIsPublished(recipe.publish) after adding publish to DB
+      }
+       if (params.id) {
+        setEdit(true);
+        getRecipe(params.id)
+       }
+
+    }, [params.id]);
 
   const handleInstructionChange = (idx, e) => {
     const newInstructions = [...instructions];
@@ -68,8 +106,10 @@ function AddReciepe() {
       });
     };
   };
-
+ // _id: recipeId,
   const newRecipe = {
+    
+    _id: recipeId,
     title: recipeTitle,
     ingredients: ingredients,
     instructions: instructions,
@@ -81,9 +121,22 @@ function AddReciepe() {
   };
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); 
     console.log(e);
     console.log(JSON.stringify(newRecipe));
+    if(edit){
+      console.log("edit.....")
+      console.log(recipeId)
+      await fetch("http://localhost:5000/recipes/editt",{ // /${recipeId}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRecipe),
+      });    
+    }else{
+
+      console.log("no edit.....")
     await fetch("http://localhost:5000/recipes/add", {
       method: "POST",
       headers: {
@@ -95,7 +148,7 @@ function AddReciepe() {
       window.alert(error);
       return;
     });
-
+  }
     // setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
     // navigate("/");    
   };

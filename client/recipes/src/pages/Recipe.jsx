@@ -45,6 +45,13 @@ function Recipe({userId}) {
   }
 
   const handleDeleteClick = () => {
+    //const response = await fetch(`http://localhost:5000/recipes/delete/${recipeId}`)
+    console.log(recipe._id)
+    console.log(userId)
+    const response = fetch(`http://localhost:5000/recipes/delete/${recipe._id}/${userId}`, {
+      method: 'PUT'
+    })//?param1=${param1}&param2=${param2}
+    console.log(response)
     // handle delete logic
     // Maayan
   }

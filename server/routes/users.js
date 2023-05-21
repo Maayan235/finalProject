@@ -31,6 +31,25 @@ usersRoutes.route('/users/recommended/:id').get(function(req, res) {
   });
 });
 
+
+// usersRoutes.route('/users/addToFavorites/:uid/:rid').get(function(req, res) {
+//   let user = {};
+//   const db_connect = dbo.getDb("RecipesWebsite");
+//   const recipeId = req.params.rid;
+//   const userId = req.params.uid;
+//   db_connect.collection('users').findOne({_id: ObjectId(userId)}, function(err, result) {
+//     if (err) throw err;
+//     json = JSON.stringify(result)
+//     user = JSON.parse(json)
+//     let favorites = user.favorites;
+//     favorites.push(recipeId)
+//     let recipies = RecommendationsMatrix.topKRecommendedRecipies(user.favoritesRecipes,6)
+//     res.json(recipies);
+//   });
+  
+// });
+
+
 // This section will help you get a list of all the records.
 usersRoutes.route("/users").get(function (req, res) {
   let db_connect = dbo.getDb("RecipesWebsite");
