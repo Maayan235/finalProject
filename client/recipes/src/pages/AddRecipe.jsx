@@ -106,9 +106,19 @@ function AddReciepe({userId}) {
       });
     };
   };
- // _id: recipeId,
+
   const newRecipe = {
-    
+    title: recipeTitle,
+    ingredients: ingredients,
+    instructions: instructions,
+    image: recipePicture,
+    imageFormat: recipePictureFormat,
+    imageFormat: recipePictureFormat,
+    tags: tags,
+    types: types
+  };
+
+  const editRecipe = {
     _id: recipeId,
     title: recipeTitle,
     ingredients: ingredients,
@@ -132,7 +142,7 @@ function AddReciepe({userId}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newRecipe),
+        body: JSON.stringify(editRecipe),
       });    
     }else{
 
