@@ -50,9 +50,6 @@ function Recipe({userId}) {
     setIsFavorite(!isFavorite);
   }
 
-  const handleEditClick = () => {
-    // handle edit logic
-  }
 
   const handleDeleteClick = () => {
     //const response = await fetch(`http://localhost:5000/recipes/delete/${recipeId}`)
@@ -130,9 +127,9 @@ function Recipe({userId}) {
       <img class= "recipeImg" src={recipeImageUrl} alt="Recipe" />
       <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
       {isFavorite ? (
-        <img src={favoriteBtn}></img>
-      ) : (
         <img src={favoriteBtnActive}></img>
+      ) : (
+        <img src={favoriteBtn}></img>
       )}
       </div>
 
@@ -140,7 +137,7 @@ function Recipe({userId}) {
       {isMyRecipe && (
         <div>
         <Link to={`/editRecipe/${recipe._id}`}>
-          <div className="edit-icon" onClick={handleEditClick}><FaEdit /></div>
+          <div className="edit-icon"><FaEdit /></div>
         </Link>
 
         <Link to="/">
