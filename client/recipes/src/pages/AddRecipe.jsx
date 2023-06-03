@@ -31,31 +31,41 @@ function AddReciepe({userId}) {
         const response = await fetch(`http://localhost:5000/recipe/${recipeId}`);
     
         if (!response.ok) {
-            const message = `An error occured: ${response.statusText}`;
-            window.alert(message);
-            return;
+          const message = `An error occurred: ${response.statusText}`;
+          window.alert(message);
+          return;
         }
     
         const recipe = await response.json();
-        // console.log(recipe._id)
-        setRecipeId(recipe._id)
-        setRecipeTitle(recipe.title)
-        setIngredients(recipe.ingredients)
-        setRecipePicture(recipe.image)
-        setInstructions(recipe.instructions)
-        setTags(recipe.tags)
-        setTypes(recipe.types)
-        if(recipe.published != null){
-          setIsPublished(recipe.isPublished)
-        } else {
-          setIsPublished(false)
+        setRecipeId(recipe._id);
+        setRecipeTitle(recipe.title);
+        setIngredients(recipe.ingredients);
+        setRecipePicture(recipe.image);
+        setInstructions(recipe.instructions);
+        if (recipe.tags && recipe.tags.length > 0) {
+          setTags(recipe.tags);
         }
-       if (params.id) {
-        setEdit(true);
-        getRecipe(params.id)
-       }
+        setTypes(recipe.types);
+        if (recipe.published != null) {
+          setIsPublished(recipe.isPublished);
+        } else {
+          setIsPublished(false);
+        }
+        if (params.id) {
+          setEdit(true);
+          getRecipe(params.id);
+        }
       }
+    
+      if (params.id) {
+        getRecipe(params.id);
+      }
+    
+      return () => {
+        // Cleanup function if needed
+      };
     }, [params.id]);
+    
 
   const handleInstructionChange = (idx, e) => {
     const newInstructions = [...instructions];
@@ -309,14 +319,12 @@ const FormWrapper = styled.form`
   flex-direction: column;
   align-items: center;
   margin: 1rem auto;
+  margin-bottom: 4rem;
   max-width: 900px;
   width: 85%;
   padding: 2rem;
   background-color: white;
   border-radius: 1rem;
-  justify-content: center;
-  min-height: 150vh;
-
   label {
     display: flex;
     flex-direction: column;
@@ -324,11 +332,9 @@ const FormWrapper = styled.form`
     margin: 1rem 0;
     width: 100%;
   }
-
   .margin-top {
     margin-top: 1rem;
   }
-
   input[type='text'],
   textarea,
   input[type='file'] {
@@ -340,11 +346,9 @@ const FormWrapper = styled.form`
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
     margin-top: 0.5rem;
   }
-
   textarea {
     height: 8rem;
   }
-
   button {
     background-color: #40555a;
     color: white;
@@ -357,21 +361,26 @@ const FormWrapper = styled.form`
     width: 200px;
     font-size: 1.2rem;
   }
-
   button[type='button'] {
     
     margin-top: 1rem;
   }
-
-  button[type='submit'] {
+  #save_btn {
     margin-top: 2rem;
     background-color: #f06a44;
+    color: white;
+    border: none;
+    padding: 1rem 1rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    margin: 1rem 0.5rem;
+    cursor: pointer;
+    width: 200px;
+    font-size: 1.2rem;
   }
-
   input[type='file'] {
     margin-top: 0;
   }
-
   
 `;
 
