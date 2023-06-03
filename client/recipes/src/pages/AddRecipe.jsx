@@ -2,8 +2,9 @@ import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from 'styled-components';
 import Compressor from 'compressorjs';
-import { useParams } from 'react-router-dom';
-import { Toggle } from '../components/Toggle';
+import { Link, useParams } from 'react-router-dom';
+import Switch from "react-switch";
+
 
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
@@ -60,6 +61,29 @@ function AddReciepe({userId}) {
     const newInstructions = [...instructions];
     newInstructions[idx] = e.target.value;
     setInstructions(newInstructions);
+  };
+
+  const handleTypeChange = (event) => {
+    const type = event.target.value;
+    if (event.target.checked) {
+      setTypes([...types, type]);
+    } else {
+      setTypes(types.filter((t) => t !== type));
+    }
+  };
+
+
+  function handlePublishChange(checked) {
+    setIsPublished(checked);
+  }
+
+  const handleTagChange = (event) => {
+    const tag = event.target.value;
+    if (event.target.checked) {
+      setTags([...tags, tag]);
+    } else {
+      setTags(tags.filter((t) => t !== tag));
+    }
   };
 
   const handleAddInstruction = () => {
@@ -149,7 +173,7 @@ function AddReciepe({userId}) {
     if(edit){
       console.log("edit.....")
       console.log(recipeId)
-      await fetch("http://localhost:5000/recipes/editt",{ // /${recipeId}", {
+      const response = await fetch("http://localhost:5000/recipes/editt",{ // /${recipeId}", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +183,7 @@ function AddReciepe({userId}) {
     }else{
 
       console.log("no edit.....")
-    await fetch("http://localhost:5000/recipes/add", {
+      const response = await fetch("http://localhost:5000/recipes/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -170,10 +194,22 @@ function AddReciepe({userId}) {
       window.alert(error);
       return;
     });
+
+    if (response.ok) {
+      const result = await response.json();
+      const recipeId = result; // Assuming the result is the ID of the recipe
+      setRecipeId(recipeId);
+      console.log("New recipe ID:", recipeId);
+      window.location.href = 'http://localhost:3000/recipe/${recipeId}';      
+    } else {
+      const error = await response.text();
+      window.alert("Error: " + error);
+      return;
+    }
   }
-    // setForm({ recipeTitle: "", ingredients: [""], recipePicture: "", instructions: [""], tags: [""], types: [""] });
-    // navigate("/");    
   };
+
+
 
   return (
     <FormWrapper  className="AddReciepe" onSubmit={handleSubmit}>
@@ -224,43 +260,44 @@ function AddReciepe({userId}) {
 
       <label for="food-type">Select Recipe types:</label>
       <div class="checkbox-group" id="food-type">
-      <div>
-        <input type="checkbox" id="veggie" name="veggie" value="veggie"/>
-        <label for="veggie">Veggie</label>
+              <div>
+          <input type="checkbox" id="veggie" name="veggie" value="veggie" onChange={handleTagChange}/>
+          <label for="veggie">Veggie</label>
 
-        <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian"/>
-        <label for="vegetarian">Vegetarian</label>
+          <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian" onChange={handleTagChange}/>
+          <label for="vegetarian">Vegetarian</label>
 
-        <input type="checkbox" id="kosher" name="kosher" value="kosher"/>
-        <label for="kosher">Kosher</label>
-		  </div>
+          <input type="checkbox" id="kosher" name="kosher" value="kosher" onChange={handleTagChange}/>
+          <label for="kosher">Kosher</label>
+        </div>
 
-		<div>
-			<input type="checkbox" id="meat" name="meat" value="meat"/>
-			<label for="meat">Meat</label>
+        <div>
+          <input type="checkbox" id="meat" name="meat" value="meat" onChange={handleTagChange}/>
+          <label for="meat">Meat</label>
 
-			<input type="checkbox" id="dairy" name="dairy" value="dairy"/>
-			<label for="dairy">Dairy</label>
+          <input type="checkbox" id="dairy" name="dairy" value="dairy" onChange={handleTagChange}/>
+          <label for="dairy">Dairy</label>
 
-			<input type="checkbox" id="italian" name="italian" value="italian"/>
-			<label for="italian">Italian</label>
-		</div>
+          <input type="checkbox" id="italian" name="italian" value="italian" onChange={handleTypeChange}/>
+          <label for="italian">Italian</label>
+        </div>
 
-		<div>
-			<input type="checkbox" id="thai" name="thai" value="thai"/>
-			<label for="thai">Thai</label>
+        <div>
+          <input type="checkbox" id="thai" name="thai" value="thai" onChange={handleTypeChange}/>
+          <label for="thai">Thai</label>
 
-			<input type="checkbox" id="american" name="american" value="american"/>
-			<label for="american">American</label>
+          <input type="checkbox" id="american" name="american" value="american" onChange={handleTypeChange}/>
+          <label for="american">American</label>
 
-			<input type="checkbox" id="japanese" name="japanese" value="japanese"/>
-			<label for="japanese">Japanese</label>
-		</div>
-    </div>
-
-    <Toggle label="Publish To Public" onClick={handleIsPublish} toggled={isPublished}/>
-
-      <input className="margin-top" type="submit" value="Submit Recipe"/>
+          <input type="checkbox" id="japanese" name="japanese" value="japanese" onChange={handleTypeChange}/>
+          <label for="japanese">Japanese</label>
+        </div>
+      </div>
+      <label>
+        <div className="margin-top">would you like to publish the recipe for everyone?</div>
+        <Switch checked={isPublished} onChange={handlePublishChange} />
+      </label>
+      <input className="margin-top" id="save_btn" type="submit" value="Save"/>
     </FormWrapper >
   );
 
