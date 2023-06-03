@@ -58,22 +58,22 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
 // This section will help you get a list of all the records.
 recipesRoutes.route("/recipes/add").post(function (req, res) {
   const newRecipe = req.body;  // assuming that the request body is a JSON object
-  newRecipe.usersCount = 1
-  console.log(newRecipe)
+  newRecipe.usersCount = 1;
+  console.log(newRecipe);
   let db_connect = dbo.getDb();
-  //db_connect.collection("recipes").updateMany({}, {$set: {"usersCount": 1}},false,true);
+  
   db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
     if (err) {
       console.log(err);
       res.status(400).send(err);
+    } else {
+      const insertedRecipeId = result.insertedId;
+      res.status(200).send({ recipeId: insertedRecipeId });
+      console.log("insertedRecipeId: " + insertedRecipeId);
     }
   });
-
-  // Maayan: return the reciepe (with id) in res.
   RecomandationsMatrix.addReciepeToMatrix(newRecipe)
-  x =RecomandationsMatrix.getMatrix()
-  //console.log(x)
-    
+  x =RecomandationsMatrix.getMatrix()    
 });
 
 
@@ -137,7 +137,42 @@ recipesRoutes.route('/recipes/delete/:rid/:uid').put(function(req, res) {
     
   });
     
+  // Route to remove a favorite from recipe user favorites count
+  recipesRoutes.put('/recipes/removeFavorite/:id', function (req, res) {
+    const recipeId = req.params.id;
+    const db_connect = dbo.getDb('RecipesWebsite');
   
+    db_connect.collection('recipes').updateOne(
+      { _id: ObjectId(recipeId) },
+      { $inc: { userFavoritesCount: -1 } },
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          res.status(400).send(err);
+        } else {
+          res.status(200).send(result);
+        }
+      }
+    );
+  });
 
+// Define the route to handle adding to the recipe user favorites count
+recipesRoutes.put('/recipes/addFavorite/:id', function (req, res) {
+  const recipeId = req.params.id;
+  const db_connect = dbo.getDb('RecipesWebsite');
+
+  db_connect.collection('recipes').updateOne(
+    { _id: ObjectId(recipeId) },
+    { $inc: { userFavoritesCount: 1 } },
+    function (err, result) {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      } else {
+        res.status(200).send(result);
+      }
+    }
+  );
+});
 
 module.exports = recipesRoutes;

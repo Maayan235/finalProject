@@ -36,8 +36,18 @@ function Recipe({userId}) {
 
 
   const handleFavoriteClick = () => {
+    if (isFavorite) {
+      // remove from user favorites
+      fetch(`http://localhost:5000/users/removeFavorite/${recipe._id}/${userId}`, { method: 'PUT' }) 
+      // remove from recipe user favorites count
+      fetch(`http://localhost:5000/recipes/removeFavorite/${recipe._id}`, { method: 'PUT' })
+    } else {
+      // add to user favorites
+      fetch(`http://localhost:5000/users/addFavorite/${recipe._id}/${userId}`, { method: 'PUT' })
+      // add to recipe user favorites count
+      fetch(`http://localhost:5000/recipes/addFavorite/${recipe._id}`, { method: 'PUT' })
+    }
     setIsFavorite(!isFavorite);
-    // Maayan +1 favorites
   }
 
   const handleEditClick = () => {
@@ -60,68 +70,64 @@ function Recipe({userId}) {
   // const ingridients = ['water, bla ,blabla' ]
 
   useEffect(() => {
-    
-    async function checkIfMyRecipe(recipeId) {
-      const response = await fetch(`http://localhost:5000/users/${userId}`);
-  
-      if (!response.ok) {
-        const message = `An error occured: ${response.statusText}`;
-        window.alert(message);
-        return;
-      }
-  
-      const user = await response.json();
-      const myRecipes = user.myRecipes;
-      const favoriteRecipes = user.favoritesRecipes;
-
-      if (myRecipes.includes(recipeId)) {
-        setIsMyRecipe(true);
-      } 
-      if (favoriteRecipes.includes(recipeId)) {
-        setIsFavorite(true);
-      } 
-
-    
-    }
-    
-    async function getRecipe(name) {
+    const fetchRecipe = async (name) => {
       try {
-        const response = await fetch(`http://localhost:5000/recipe/${name}`);
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        const recipeResponse = await fetch(`http://localhost:5000/recipe/${name}`);
+  
+        if (!recipeResponse.ok) {
+          throw new Error(`HTTP error! Status: ${recipeResponse.status}`);
         }
-    
-        const recipe = await response.json();
+  
+        const recipe = await recipeResponse.json();
         setRecipe(recipe);
         checkIfMyRecipe(recipe._id);
-    
-        // Fetch image data and create URL
-        const imageResponse = await fetch(`data:${recipe.imageFormat};base64,${recipe.image}`);
-        const imageBlob = await imageResponse.blob();
-        const imageUrl = URL.createObjectURL(imageBlob);
-        setRecipeImageUrl(imageUrl);
+        console.log(recipe);
+        if (recipe.image) {
+          setRecipeImageUrl(recipe.image);
+        }
       } catch (error) {
         console.error('Error fetching recipe:', error);
       }
-    }
-    
-    
-
-
+    };
+  
+    const checkIfMyRecipe = async (recipeId) => {
+      try {
+        const userResponse = await fetch(`http://localhost:5000/users/${userId}`);
+  
+        if (!userResponse.ok) {
+          throw new Error(`An error occurred: ${userResponse.statusText}`);
+        }
+  
+        const user = await userResponse.json();
+        const myRecipes = user.myRecipes;
+        const favoriteRecipes = user.favoritesRecipes;
+  
+        setIsMyRecipe(myRecipes.includes(recipeId));
+        setIsFavorite(favoriteRecipes.includes(recipeId));
+      } catch (error) {
+        console.error('Error checking if recipe is favorite:', error);
+        window.alert('An error occurred while checking if the recipe is a favorite.');
+      }
+    };
+  
     if (params.name) {
-      getRecipe(params.name);
+      fetchRecipe(params.name);
     }
-    console.log("recipe.instructions:", recipe.instructions)
-
-}, [params.name]);
+  
+    return () => {
+      // Cleanup function to revoke the URL object when the component unmounts
+      if (recipeImageUrl) {
+        URL.revokeObjectURL(recipeImageUrl);
+      }
+    };
+  }, [params.name, userId]);
 
 
   return (
     <DetailWrapper>
     <div className='top'>
       <h2>{recipe.title}</h2>
-      <img class= "recipeImg" src={recipeImageUrl} alt="" />
+      <img class= "recipeImg" src={recipeImageUrl} alt="Recipe" />
       <div className={`favorite-icon ${isFavorite ? 'active' : ''}`} onClick={handleFavoriteClick}>
       {isFavorite ? (
         <img src={favoriteBtn}></img>

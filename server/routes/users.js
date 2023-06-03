@@ -17,7 +17,6 @@ const RecommendationsMatrix = require("../recommendations/recomandationsMatrix")
 const saltRounds = 10; // you can adjust the number of salt rounds based on your security requirements
 
 
-
 usersRoutes.route('/users/recommended/:id').get(function(req, res) {
   let user = {};
   const db_connect = dbo.getDb("RecipesWebsite");
@@ -123,6 +122,56 @@ usersRoutes.route('/users/:id').get(function(req, res) {
     if (err) throw err;
     res.json(result);
   });
+});
+
+// Route to remove a recipe from user favorites
+usersRoutes.put('/users/removeFavorite/:recipeId/:userId', function (req, res) {
+  try {
+    const { recipeId, userId } = req.params;
+    const db_connect = dbo.getDb('RecipesWebsite');
+
+    db_connect.collection('users').findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $pull: { favoritesRecipes: recipeId } },
+      { returnOriginal: false },
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal server error' });
+        } else {
+          res.status(200).json(result.value);
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to add a recipe to user favorites
+usersRoutes.put('/users/addFavorite/:recipeId/:userId', function (req, res) {
+  try {
+    const { recipeId, userId } = req.params;
+    const db_connect = dbo.getDb('RecipesWebsite');
+
+    db_connect.collection('users').findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $push: { favoritesRecipes: recipeId } },
+      { returnOriginal: false },
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal server error' });
+        } else {
+          res.status(200).json(result.value);
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 module.exports = usersRoutes;

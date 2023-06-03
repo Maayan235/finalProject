@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import styled from 'styled-components';
 import Compressor from 'compressorjs';
 import { useParams } from 'react-router-dom';
+import { Toggle } from '../components/Toggle';
+
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
@@ -17,6 +19,7 @@ function AddReciepe({userId}) {
   const [tags, setTags] = useState([]);
   const [types, setTypes] = useState([]);
   const [isPublished, setIsPublished] = useState(false);
+  const [userFavoritesCount, setUserFavoritesCount] = useState(1);
 
 
   let params = useParams();
@@ -41,15 +44,16 @@ function AddReciepe({userId}) {
         setInstructions(recipe.instructions)
         setTags(recipe.tags)
         setTypes(recipe.types)
-        //setIsPublished(recipe.isPublished)
-        
-        // Maayan: add setIsPublished(recipe.publish) after adding publish to DB
-      }
+        if(recipe.published != null){
+          setIsPublished(recipe.isPublished)
+        } else {
+          setIsPublished(false)
+        }
        if (params.id) {
         setEdit(true);
         getRecipe(params.id)
        }
-
+      }
     }, [params.id]);
 
   const handleInstructionChange = (idx, e) => {
@@ -74,6 +78,10 @@ function AddReciepe({userId}) {
     const newIngredients = [...ingredients];
     newIngredients.push("");
     setIngredients(newIngredients);
+  };
+
+  const handleIsPublish = () => {
+    setIsPublished(!isPublished);
   };
 
   const handleRecipePictureChange = (event) => {
@@ -115,7 +123,9 @@ function AddReciepe({userId}) {
     imageFormat: recipePictureFormat,
     imageFormat: recipePictureFormat,
     tags: tags,
-    types: types
+    types: types,
+    published: isPublished,
+    userFavoritesCount: userFavoritesCount
   };
 
   const editRecipe = {
@@ -127,7 +137,9 @@ function AddReciepe({userId}) {
     imageFormat: recipePictureFormat,
     imageFormat: recipePictureFormat,
     tags: tags,
-    types: types
+    types: types,
+    published: isPublished,
+    userFavoritesCount: userFavoritesCount
   };
 
   async function handleSubmit(e) {
@@ -245,6 +257,8 @@ function AddReciepe({userId}) {
 			<label for="japanese">Japanese</label>
 		</div>
     </div>
+
+    <Toggle label="Publish To Public" onClick={handleIsPublish} toggled={isPublished}/>
 
       <input className="margin-top" type="submit" value="Submit Recipe"/>
     </FormWrapper >
