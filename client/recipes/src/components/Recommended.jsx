@@ -86,8 +86,6 @@ function Recommended(userId) {
             
             
 
-            console.log(recipes);
-
 
             const api = await fetch(`http://localhost:5000/users/recommended/${userId.userId}`);
             const data = await api.json();
