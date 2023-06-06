@@ -207,10 +207,8 @@ function AddReciepe({userId}) {
 
     if (response.ok) {
       const result = await response.json();
-      // const recipeId = result; // Assuming the result is the ID of the recipe
       setRecipeId(result.recipeId);
-      console.log("New recipe ID:", recipeId);
-      window.location.href = `http://localhost:3000/recipe/${recipeId}`;     
+      window.location.href = `http://localhost:3000/recipe/${result.recipeId}`;     
     } else {
       const error = await response.text();
       window.alert("Error: " + error);
