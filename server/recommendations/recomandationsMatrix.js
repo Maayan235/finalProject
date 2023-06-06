@@ -117,7 +117,7 @@ class RecommendationsMatrix{
     }
 
     static findMostKSimilarRecipies(recipeId, k){
-        let simVector = this.matrix.find(x => x[1] == recipeId)
+        let simVector = this.matrix.find(x => x[1] == recipeId).slice()
         let idVector = this.matrix[1]
         let jsonList = [] 
         for(let i = 2; i< this.matrix[0].length; i++){
@@ -132,8 +132,9 @@ class RecommendationsMatrix{
         if(favorites.length == 0){
             return null
         }
+        //console.log(this.matrix[2][1])
         let favoriteSet =new Set(favorites)
-        let simVector = this.matrix.find(x => x[1] == favorites[0])
+        let simVector = this.matrix.find(x => x[1] == favorites[0]).slice()
         let idVector = this.matrix[1]
         let jsonList = [] 
         
