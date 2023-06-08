@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Compressor from 'compressorjs';
 import { Link, useParams } from 'react-router-dom';
 import Switch from "react-switch";
-
+import noImage from '../images/noimageavailable.png'
 
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
@@ -14,7 +14,7 @@ function AddReciepe({userId}) {
   const [recipeId,setRecipeId] = useState("");
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState([""]);
-  const [recipePicture, setRecipePicture] = useState(null);
+  const [recipePicture, setRecipePicture] = useState(noImage);
   const[recipePictureFormat, setRecipePictureFormat] = useState(null);
   const [instructions, setInstructions] = useState([""]);
   const [tags, setTags] = useState([]);

@@ -10,7 +10,7 @@ import { AiOutlineStar } from 'react-icons/ai';
 import favoriteBtn from '../images/favorite_icon.png'
 import favoriteBtnActive from '../images/favorite_icon_active.png'
 import { Link } from "react-router-dom";
-
+import noImage from '../images/noimageavailable.png'
 
 
 function Recipe({userId}) {
@@ -20,7 +20,7 @@ function Recipe({userId}) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isMyRecipe, setIsMyRecipe] = useState(false);
-  const [recipeImageUrl, setRecipeImageUrl] = useState(null);
+  const [recipeImageUrl, setRecipeImageUrl] = useState(noImage);
   // const instructionsCopy = [...recipe.instructions];
 
 

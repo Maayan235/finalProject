@@ -73,8 +73,7 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
     }
   });
   RecomandationsMatrix.addReciepeToMatrix(newRecipe)
-  x =RecomandationsMatrix.getMatrix()    
-});
+  });
 
 
 recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
@@ -127,7 +126,6 @@ recipesRoutes.route("/recipes/editt").post(function (req, res) {
 });
 
 recipesRoutes.route('/recipes/delete/:rid/:uid').put(function(req, res) {
-  console.log("herr!!")
   const recipeId = req.params.rid;
   const userId = req.params.uid;
   let db_connect = dbo.getDb();

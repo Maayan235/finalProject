@@ -22,7 +22,9 @@ module.exports = {
         .toArray(function (err, result) {
           if (err) throw err;
           RecommendationsMatrix.createMatrix(result) 
-          console.log(RecommendationsMatrix.getMatrix())
+        //  console.log(RecommendationsMatrix.getMatrix()[0][0])
+        // console.log("00")
+        
         });
       }
       return callback(err);

@@ -25,7 +25,7 @@ usersRoutes.route('/users/recommended/:id').get(function(req, res) {
     if (err) throw err;
     json = JSON.stringify(result)
     user = JSON.parse(json)
-    let recipies = RecommendationsMatrix.topKRecommendedRecipies(user.favoritesRecipes,6)
+    let recipies = RecommendationsMatrix.topKRecommendedrecipes(user.favoritesRecipes, user.myRecipes,6)
     res.json(recipies);
   });
 });
