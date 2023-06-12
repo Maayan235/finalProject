@@ -17,18 +17,16 @@ module.exports = {
         _db = db.db("RecipesWebsite");
         console.log("Successfully connected to MongoDB.");
         _db
-        .collection("recipes")
+        .collection("recipes")  
         .find({})
         .toArray(function (err, result) {
           if (err) throw err;
-          RecommendationsMatrix.createMatrix(result) 
-        //  console.log(RecommendationsMatrix.getMatrix()[0][0])
-        // console.log("00")
-        
+          RecommendationsMatrix.createMatrix(result)   
         });
       }
       return callback(err);
          });
+
   },
  
   getDb: function () {

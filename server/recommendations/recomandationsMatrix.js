@@ -7,6 +7,7 @@ class RecommendationsMatrix{
 
 
     static createMatrix(reciepes){
+        console.log("create..")
         this.matrix = [[0,0],[0,0]];
         for(let i = 0; i< reciepes.length; i++){
             this.recipes.push(reciepes[i])                        
@@ -15,7 +16,7 @@ class RecommendationsMatrix{
             RecommendationsMatrix.addReciepeToMatrix(reciepes[i]);
         }
         // console.log("*****matrix*****")
-         console.log(this.matrix)
+         //console.log(this.matrix)
          console.log("*****matrix*****")
     }
     static updatedRecipe(updatedRecipe){
@@ -54,21 +55,36 @@ class RecommendationsMatrix{
     const union = new Set([...set1, ...set2]);
     
     // Calculate the Jaccard similarity coefficient
-    const similarity = (intersection.size) / (union.size + 1 );
+    const similarity = (intersection.size) / (10*(union.size));
     // Round the similarity to two decimal places 
-    return parseFloat(similarity.toFixed(2));
+    return intersection.size //, parseFloat(similarity.toFixed(2));
     }
     
+    // static recipeSimilarity(recipe1, recipe2){
+    //     //similarity of type
+    //     let typeIntersection, typeRatio = RecommendationsMatrix.wordsSimilarity(recipe1.types,recipe2.types)
+    //     let typeSimilarity = Math.max(typeIntersection * 0.08 + typeRatio , 0.4)
+    //     // similarity of tags 
+    //     let tagsIntersection, tagsRatio = RecommendationsMatrix.wordsSimilarity(recipe1.tags,recipe2.tags)  
+    //     let tagsSimilarity = Math.max(tagsIntersection * 0.08 + tagsRatio, 0.4)
+    //     //similarity of ingridients
+    //     let ingIntersection ,ingredientsRatio =  RecommendationsMatrix.wordsSimilarity(recipe1.ingredients ,recipe2.ingredients)
+    //     let ingredientsSimilarity = Math.max(ingIntersection * 0.02 + ingredientsRatio , 0.3)
+    //     return parseFloat(((typeSimilarity + tagsSimilarity + 0.4 * ingredientsSimilarity)/ 2.4).toFixed(2))
+    // }
+
     static recipeSimilarity(recipe1, recipe2){
         //similarity of type
-        let typeSimilarity = RecommendationsMatrix.wordsSimilarity(recipe1.types,recipe2.types)
+        let typeIntersection = RecommendationsMatrix.wordsSimilarity(recipe1.types,recipe2.types)
+        let typeSimilarity = Math.min(typeIntersection * 0.12 , 0.4)
         // similarity of tags 
-        let tagsSimilarity = RecommendationsMatrix.wordsSimilarity(recipe1.tags,recipe2.tags)  
+        let tagsIntersection = RecommendationsMatrix.wordsSimilarity(recipe1.tags,recipe2.tags)  
+        let tagsSimilarity = Math.min(tagsIntersection * 0.12 , 0.4)
         //similarity of ingridients
-        let ingredientsSimilarity =  RecommendationsMatrix.wordsSimilarity(recipe1.ingredients ,recipe2.ingredients)
-        return parseFloat(((typeSimilarity + tagsSimilarity + 0.4 * ingredientsSimilarity)/ 2.4).toFixed(2))
+        let ingIntersection =  RecommendationsMatrix.wordsSimilarity(recipe1.ingredients ,recipe2.ingredients)
+        let ingredientsSimilarity = Math.min(ingIntersection * 0.04 , 0.3)
+        return parseFloat(((typeSimilarity + tagsSimilarity + ingredientsSimilarity)).toFixed(2))
     }
-
     static getMatrix(){
         return this.matrix
     }
@@ -90,6 +106,7 @@ class RecommendationsMatrix{
     }   
     
     static addReciepeToMatrix(newReciepe){
+        
         if(!(this.recipes.find(x => x._id == newReciepe._id))){
             this.recipes.push(newReciepe)
         }
@@ -115,8 +132,7 @@ class RecommendationsMatrix{
                 this.matrix[i][index]= simVector[i]
             }
         }
-        console.log("after adding::")
-        console.log(this.matrix)
+        //console.log(this.matrix)
 
     }
     static findTopKSimilarities(jsonList, k){
@@ -146,7 +162,14 @@ class RecommendationsMatrix{
     
     static topKRecommendedrecipes(favorites, myRecipes, k){
         let jsonList = []
-        let publicRecipes = this.recipes.filter(x => !(favorites.includes(x._id)) && !(myRecipes.find(y=> y._id == x._id)) && x.published )
+        console.log(favorites)
+        console.log("**fav**")
+        let publicRecipes = this.recipes.filter(x => !(favorites.includes(x._id.toString())) && !(myRecipes.includes(x._id.toString())) && x.published )
+        for( let i = 0; i< publicRecipes.length; i++){
+            console.log(publicRecipes[i]._id)
+            console.log(publicRecipes[i].title)
+        }
+        console.log("**public..**")
         if(favorites.length > 0){
         //console.log(this.matrix[2][1])
         let favoriteSet =new Set(favorites)
@@ -162,7 +185,7 @@ class RecommendationsMatrix{
         }
         
         for(let i = 2; i< this.matrix[0].length; i++){
-            if(publicRecipes.find(x => x._id == idVector[i].toString())){
+            if(publicRecipes.find(x => x._id == idVector[i].toString()) && this.matrix[0][i]){
                 jsonList.push({"id" : idVector[i], "similarity" : simVector[i]})
             }
         }
@@ -236,3 +259,4 @@ console.log(RecommendationsMatrix.findMostKSimilarrecipes(1,3))
 
 
 */
+

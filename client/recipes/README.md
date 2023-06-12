@@ -88,3 +88,4 @@ TODO:
 13. npm install multer
 14. npm install compressorjs
 
+15. npm install -g jest // tests
