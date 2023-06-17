@@ -93,3 +93,5 @@ npm install streamsearch
 npm install require-at
 npm install npmlog   
 npm install yallist
+npm install slick-carousel
+npm install react-slick
