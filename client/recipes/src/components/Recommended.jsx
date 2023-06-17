@@ -24,7 +24,7 @@ function Recommended(userId) {
             setPopular(JSON.parse(check));
         } else {
             // const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
-            // const apii = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
+            // const apii = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`);
             // const dataa = await apii.json();
             // settemparray(dataa.recipes);
             // const parseInstructions = (instructions) => {
@@ -91,7 +91,7 @@ function Recommended(userId) {
             const api = await fetch(`http://localhost:5000/users/recommended/${userId.userId}`);
             const data = await api.json();
             console.log(data)
-            localStorage.setItem('popular', JSON.stringify(data));
+            // localStorage.setItem('popular', JSON.stringify(data));
             setPopular(data);
         }
         

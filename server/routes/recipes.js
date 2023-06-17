@@ -181,7 +181,7 @@ recipesRoutes.route("/latest-recipes").get(function (req, res) {
     .collection("recipes")
     .find({ published: true })
     .sort({ _id: -1 })
-    .limit(6)
+    .limit(36)
     .toArray(function (err, result) {
       if (err) throw err;
       res.json(result);
