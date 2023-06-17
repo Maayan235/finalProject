@@ -54,6 +54,8 @@ function Cuisine() {
 
     return (
         <div>
+        <br></br>
+        <br></br>
         <h3>{params.type.charAt(0).toUpperCase() + params.type.slice(1)} Food:</h3>
             <div className="card-container">
                 {recipes && recipes.map((recipe) => (

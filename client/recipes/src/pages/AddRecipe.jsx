@@ -220,7 +220,9 @@ function AddReciepe({userId}) {
 
 
   return (
+
     <FormWrapper  className="AddReciepe" onSubmit={handleSubmit}>
+    
       <label>
         <div className="margin-top">Recipe Name:</div>
         <input type="text" value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
@@ -316,7 +318,7 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem auto;
+  margin: 3rem auto;
   margin-bottom: 4rem;
   max-width: 900px;
   width: 85%;
@@ -343,6 +345,7 @@ const FormWrapper = styled.form`
     border: none;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
     margin-top: 0.5rem;
+    min-width: 600px;
   }
   textarea {
     height: 8rem;

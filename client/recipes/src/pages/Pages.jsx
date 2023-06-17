@@ -15,14 +15,14 @@ function Pages({userId}) {
   return (
 
     <Routes>
-        <Route path='/' element={<Home userId={userId} />} />
-        <Route path='/cuisine/:type' element={<Cuisine userId={userId}/>} />
-        <Route path='/searched/:search' element={<Searched userId={userId}/>} />
-        <Route path ='/recipe/:name' element={<Recipe userId={userId}/>} />
-        <Route path ='/addRecipe' element={<AddRecipe userId={userId} />} />
-        <Route path ='/editRecipe/:id' element={<AddRecipe userId={userId} />} />
-        <Route path ='/favorites' element={<Favorites userId={userId} />} />
-        <Route path ='/myrecipes' element={<MyRecipes userId={userId} />} />
+      <Route path='/' element={<Home userId={userId} />} />
+      <Route path='/cuisine/:type' element={<Cuisine userId={userId}/>} />
+      <Route path='/searched/:search' element={<Searched userId={userId}/>} />
+      <Route path ='/recipe/:name' element={<Recipe userId={userId}/>} />
+      <Route path ='/addRecipe' element={<AddRecipe userId={userId} />} />
+      <Route path ='/editRecipe/:id' element={<AddRecipe userId={userId} />} />
+      <Route path ='/favorites' element={<Favorites userId={userId} />} />
+      <Route path ='/myrecipes' element={<MyRecipes userId={userId} />} />
     </Routes>
   );
 }

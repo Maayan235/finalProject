@@ -36,6 +36,8 @@ useEffect(() => {
 
     return (
         <div>
+            <br></br>
+            <br></br>
             <h4 >Favorites:</h4>
             <br></br>
             <div className="card-container">

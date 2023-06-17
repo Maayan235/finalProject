@@ -61,10 +61,6 @@ body {
     padding-top: 20px;
     
   }
-
-  .nav-wrapper {
-    position: relative;
-  }
   
   .logout-link {
     position: absolute;
