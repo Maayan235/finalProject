@@ -23,8 +23,8 @@ function Recommended(userId) {
         //if(check){
             setPopular(JSON.parse(check));
         } else {
-            //const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
-            // const apii = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=1`);
+            // const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
+            // const apii = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=6`);
             // const dataa = await apii.json();
             // settemparray(dataa.recipes);
             // const parseInstructions = (instructions) => {
@@ -61,6 +61,7 @@ function Recommended(userId) {
             //     .map(cuisine => cuisine.toLowerCase()),
             //   usersCount: 0,
             //   userFavoritesCount: 0,
+            //   published: true,
             // }));
 
             // recipes.forEach(async (recipe) => {

@@ -89,3 +89,7 @@ TODO:
 14. npm install compressorjs
 
 15. npm install -g jest // tests
+npm install streamsearch
+npm install require-at
+npm install npmlog   
+npm install yallist

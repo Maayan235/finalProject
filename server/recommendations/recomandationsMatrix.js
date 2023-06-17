@@ -16,7 +16,7 @@ class RecommendationsMatrix{
             RecommendationsMatrix.addReciepeToMatrix(reciepes[i]);
         }
         // console.log("*****matrix*****")
-         //console.log(this.matrix)
+        //  console.log(this.matrix)
          console.log("*****matrix*****")
     }
     static updatedRecipe(updatedRecipe){
@@ -132,7 +132,8 @@ class RecommendationsMatrix{
                 this.matrix[i][index]= simVector[i]
             }
         }
-        //console.log(this.matrix)
+        // console.log("after adding::")
+        // console.log(this.matrix)
 
     }
     static findTopKSimilarities(jsonList, k){
