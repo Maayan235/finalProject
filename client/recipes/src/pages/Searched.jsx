@@ -50,6 +50,8 @@ function Searched() {
 
     <div>
         <Search />
+        <br></br>
+        <br></br>
         <div className="card-container">
             {searchedRecipes && searchedRecipes.length > 0 ? (
                 searchedRecipes.map((recipe) => (
