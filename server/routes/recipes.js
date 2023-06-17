@@ -173,4 +173,19 @@ recipesRoutes.put('/recipes/addFavorite/:id', function (req, res) {
   );
 });
 
+
+// Define the route to handle the 6 latest published recepies tat are published
+recipesRoutes.route("/latest-recipes").get(function (req, res) {
+  let db_connect = dbo.getDb("RecipesWebsite");
+  db_connect
+    .collection("recipes")
+    .find({ published: true })
+    .sort({ _id: -1 })
+    .limit(6)
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
+});
+
 module.exports = recipesRoutes;
