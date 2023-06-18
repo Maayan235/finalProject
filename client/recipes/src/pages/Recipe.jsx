@@ -192,7 +192,7 @@ const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1rem auto;
+  margin: 3rem auto;
   max-width: 900px;
   width: 85%;
   padding: 2rem;
@@ -211,6 +211,8 @@ const DetailWrapper = styled.div`
   }
 
   .recipeImg {
+    max-width: 300px;
+    max-height: 250px;
     width: 35%;
     height: 35%;
     border-radius: 15%;

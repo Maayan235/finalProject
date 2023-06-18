@@ -21,7 +21,6 @@ function Recommended() {
   const getRecentRecipes = async () => {
     const api = await fetch("http://localhost:5000/latest-recipes"); // Replace with your backend API endpoint
     const data = await api.json();
-    console.log(data);
     setRecentRecipes(data);
   };
 
