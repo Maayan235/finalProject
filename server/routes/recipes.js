@@ -59,7 +59,6 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
 recipesRoutes.route("/recipes/add").post(function (req, res) {
   const newRecipe = req.body;  // assuming that the request body is a JSON object
   newRecipe.usersCount = 1;
-  console.log(newRecipe);
   let db_connect = dbo.getDb();
   
   db_connect.collection("recipes").insertOne(newRecipe, function (err, result) {
@@ -69,7 +68,6 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
     } else {
       const insertedRecipeId = result.insertedId;
       res.status(200).send({ recipeId: insertedRecipeId });
-      console.log("insertedRecipeId: " + insertedRecipeId);
     }
   });
   RecomandationsMatrix.addReciepeToMatrix(newRecipe)
@@ -101,11 +99,8 @@ recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
 
 recipesRoutes.route("/recipes/editt").post(function (req, res) {
   //const recipeId = req.params.id;
-  //console.log(recipeId)
   const updatedRecipe = req.body; // assuming that the request body is a JSON object
-  console.log(updatedRecipe)
   let db_connect = dbo.getDb();
-  
   db_connect.collection("recipes").updateOne({_id: ObjectId(updatedRecipe._id)}, 
   {$set:{
     title: updatedRecipe.title,
@@ -181,7 +176,7 @@ recipesRoutes.route("/latest-recipes").get(function (req, res) {
     .collection("recipes")
     .find({ published: true })
     .sort({ _id: -1 })
-    .limit(6)
+    .limit(36)
     .toArray(function (err, result) {
       if (err) throw err;
       res.json(result);

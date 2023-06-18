@@ -7,7 +7,6 @@ class RecommendationsMatrix{
 
 
     static createMatrix(reciepes){
-        console.log("create..")
         this.matrix = [[0,0],[0,0]];
         for(let i = 0; i< reciepes.length; i++){
             this.recipes.push(reciepes[i])                        
@@ -15,16 +14,13 @@ class RecommendationsMatrix{
         for(let i = 0; i< reciepes.length; i++){
             RecommendationsMatrix.addReciepeToMatrix(reciepes[i]);
         }
-        // console.log("*****matrix*****")
-        //  console.log(this.matrix)
+       
          console.log("*****matrix*****")
     }
     static updatedRecipe(updatedRecipe){
-        console.log("in updateRR")
         let former = this.recipes.find(x => x._id == updatedRecipe._id)
         if(updatedRecipe.published){
             if(former == undefined){
-                console.log("no such recipe")
                 return;
             }
             former.title = updatedRecipe.title,
@@ -35,9 +31,7 @@ class RecommendationsMatrix{
             former.types = updatedRecipe.types   
             }
         else{
-            console.log("in else")
             if(former != undefined){
-                console.log("in if in else")
                 this.removeReciepe(updatedRecipe._id)
             }
         }
@@ -132,8 +126,7 @@ class RecommendationsMatrix{
                 this.matrix[i][index]= simVector[i]
             }
         }
-        // console.log("after adding::")
-        // console.log(this.matrix)
+  
 
     }
     static findTopKSimilarities(jsonList, k){
@@ -163,16 +156,9 @@ class RecommendationsMatrix{
     
     static topKRecommendedrecipes(favorites, myRecipes, k){
         let jsonList = []
-        console.log(favorites)
-        console.log("**fav**")
         let publicRecipes = this.recipes.filter(x => !(favorites.includes(x._id.toString())) && !(myRecipes.includes(x._id.toString())) && x.published )
-        for( let i = 0; i< publicRecipes.length; i++){
-            console.log(publicRecipes[i]._id)
-            console.log(publicRecipes[i].title)
-        }
-        console.log("**public..**")
         if(favorites.length > 0){
-        //console.log(this.matrix[2][1])
+
         let favoriteSet =new Set(favorites)
         let simVector = this.matrix.find(x => x[1] == favorites[0]).slice()
         let idVector = this.matrix[1]
@@ -221,43 +207,4 @@ class RecommendationsMatrix{
       
 }
 module.exports = RecommendationsMatrix
-
-
-/*
-
-let r1 = {'id' : 1, 'tags' : ["kasher", "veg"], 'ingridients' : ["sugar", "water", "salt"], 'types' : ["italian", "fast"]}
-let r2 = {'id' : 2, 'tags' : ["free", "veg", "no sugar"], 'ingridients' : [ "water", "salt", "pepper"], 'types' : ["italian"]}
-recipes = [r1]
-
-RecommendationsMatrix.createMatrix(recipes)
-
-RecommendationsMatrix.addReciepeToMatrix(r2, recipes);
-//console.log(matrix)
-recipes.push(r2)
-let r3 = {'id' : 3, 'tags' : ["free", "veg", "no sugar"], 'ingridients' : [ "water", "salt", "pepper","bla"], 'types' : ["italian"]}
-recipes.push(r3)
-
-let r4 = {'id' : 4, 'tags' : ["kasher", "veg", "no sugar"], 'ingridients' : [ "water", "salt", "pepper","bla"], 'types' : ["italian", "fast","gg"]}
-RecommendationsMatrix.addReciepeToMatrix(r3,recipes);
-//console.log(matrix)Fc
-
-RecommendationsMatrix.addReciepeToMatrix(r4, recipes);
-//console.log(matrix)
-
-recipes.push(r4)
-// matrix[2][0] = 0
-// matrix[0][2] = 0
-
-let r5 = {'id' : 5, 'tags' : ["no sugar"], 'ingridients' : ["bla"], 'types' : ["italian", "fast"]}
-recipes.push(r5)
-
-console.log("*****************************************8")
-RecommendationsMatrix.addReciepeToMatrix(r5, recipes);
-RecommendationsMatrix.removeReciepe(5)
-//console.log(matrix)
-//console.log(topKRecommendedrecipes(recipes,[4,3],matrix, 4))
-console.log(RecommendationsMatrix.findMostKSimilarrecipes(1,3))  
-
-
-*/
 

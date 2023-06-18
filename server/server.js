@@ -15,7 +15,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 app.post("/upload", upload.single("file"), (req, res) => {
-  console.log(req.file);
   res.send("File uploaded successfully.");
 });
 
