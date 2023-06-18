@@ -47,16 +47,11 @@ function Recipe({userId}) {
 
 
   const handleDeleteClick = () => {
-    //const response = await fetch(`http://localhost:5000/recipes/delete/${recipeId}`)
     const response = fetch(`http://localhost:5000/recipes/delete/${recipe._id}/${userId}`, {
       method: 'PUT'
-    })//?param1=${param1}&param2=${param2}
-    // handle delete logic
-    // Maayan
+    })
   }
 
-  // const instructionsList = ['step one','Add 500 ml of water and mix well. jump on one leg, put your finger on your tongue', 'step three.' ]
-  // const ingridients = ['water, bla ,blabla' ]
 
   useEffect(() => {
     const fetchRecipe = async (name) => {

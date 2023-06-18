@@ -41,6 +41,7 @@ function AddReciepe({userId}) {
         setIngredients(recipe.ingredients);
         setRecipePicture(recipe.image);
         setInstructions(recipe.instructions);
+        setUserFavoritesCount(recipe.userFavoritesCount);
     
         if (recipe.tags && recipe.tags.length > 0) {
           setTags(recipe.tags);
@@ -113,10 +114,6 @@ function AddReciepe({userId}) {
     const newIngredients = [...ingredients];
     newIngredients.push("");
     setIngredients(newIngredients);
-  };
-
-  const handleIsPublish = () => {
-    setIsPublished(!isPublished);
   };
 
   const handleRecipePictureChange = (event) => {
