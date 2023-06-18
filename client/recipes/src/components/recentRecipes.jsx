@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import './Card.css';
 import RecipeCard from "./RecipeCard";
 import Slider from "react-slick";
@@ -19,7 +18,7 @@ function Recommended() {
   }, []);
 
   const getRecentRecipes = async () => {
-    const api = await fetch("http://localhost:5000/latest-recipes"); // Replace with your backend API endpoint
+    const api = await fetch("http://localhost:5000/latest-recipes"); 
     const data = await api.json();
     setRecentRecipes(data);
   };

@@ -1,4 +1,3 @@
-import Veggie from "../components/Veggie";
 import Recommended from "../components/Recommended";
 import { useEffect, useState } from 'react';
 import React from 'react'

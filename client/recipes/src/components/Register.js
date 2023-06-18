@@ -55,7 +55,6 @@ function Register({afterRegister, backToLogin}) {
 
     // All checks passed, register user
     
-
     let newUser = { username:username , email:email, password:password };
       await fetch("http://localhost:5000/users/add", {
       method: "POST",

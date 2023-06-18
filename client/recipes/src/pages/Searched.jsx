@@ -1,91 +1,55 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
-import '../components/Card.css'
+import '../components/Card.css';
 import Search from '../components/Search';
 
 function Searched() {
+  const [searchedRecipes, setSearchRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  let params = useParams();
 
-    const [searchedRecipes, setSearchRecipes] = useState([]);
-    let params = useParams();
+  useEffect(() => {
+    async function getSearchedRecipes(search) {
+      const response = await fetch(`http://localhost:5000/recipes/searched/${search}`);
 
-    // const getSearched = async (name) => {
-    //     const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}`)
-    //     const recipes = await data.json();
-    //     setSearchRecipes(recipes.results);
+      if (!response.ok) {
+        const message = `An error occurred: ${response.statusText}`;
+        window.alert(message);
+        return;
+      }
 
-    // };
+      const recipes = await response.json();
+      setSearchRecipes(recipes);
+      setLoading(false);
+    }
 
-    // useEffect(() => {
-    //     getSearched(params.search);
-    // }, [params.search]);
-
-
-    // This method fetches the records from the database.
-    useEffect(() => {
-        async function getSearchedRecipes(search) {
-            const response = await fetch(`http://localhost:5000/recipes/searched/${search}`);
-        
-            if (!response.ok) {
-                const message = `An error occured: ${response.statusText}`;
-                window.alert(message);
-                return;
-            }
-        
-            const recipes = await response.json();
-            setSearchRecipes(recipes);
-
-
-        }
-        if (params.search) {
-            getSearchedRecipes(params.search);
-        }
-
-    }, [params.search]);
+    if (params.search) {
+      getSearchedRecipes(params.search);
+    }
+  }, [params.search]);
 
   return (
-
     <div>
-        <Search />
-        <br></br>
-        <br></br>
-        <div className="card-container">
-            {searchedRecipes && searchedRecipes.length > 0 ? (
-                searchedRecipes.map((recipe) => (
-                <div className="card">
-                <RecipeCard recipe={recipe} />
-                </div>
-             ))
-) : (
-  <h3>No results...</h3>
-)}
-        </div>
+      <Search />
+      <br />
+      <br />
+      <div className="card-container">
+        {loading ? (
+          <h3>Loading...</h3>
+        ) : searchedRecipes && searchedRecipes.length > 0 ? (
+          searchedRecipes.map((recipe) => (
+            <div className="card">
+              <RecipeCard recipe={recipe} />
+            </div>
+          ))
+        ) : (
+          <h3>No results...</h3>
+        )}
+      </div>
     </div>
-
-  )
+  );
 }
 
-const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    grid-gap: 3rem;
-`
-
-const Card = styled.div`
-    img{
-        width: 100%;
-        border-radius: 2rem;
-    }
-    a {
-        text-decoration: none;
-    }
-    h4{
-        text-align: center;
-        padding: 1rem;
-    }
-`
-
-export default Searched
+export default Searched;

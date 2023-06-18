@@ -11,7 +11,7 @@ const navigate = useNavigate();
 const submitHandler = (e) => {
     e.preventDefault();
     navigate('/searched/'+input)
-    setInput(""); // reset the input field to an empty string
+    setInput(""); 
 };
 
   return (

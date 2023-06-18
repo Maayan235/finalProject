@@ -8,7 +8,7 @@ import noImage from '../images/noimageavailable.png'
 
 import addImage from '../images/addPicture.png'
 
-import "./AddRecipe.css"; // Import the CSS file with the centering styles
+import "./AddRecipe.css"; 
 
 function AddReciepe({userId}) {
   const [edited, setEdited] = useState(false);
@@ -27,7 +27,6 @@ function AddReciepe({userId}) {
 
   let params = useParams();
 
-    // This method fetches the records from the database.
     useEffect(() => {
       async function getRecipe(recipeId) {
         const response = await fetch(`http://localhost:5000/recipe/${recipeId}`);

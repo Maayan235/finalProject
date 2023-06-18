@@ -176,7 +176,8 @@ recipesRoutes.route("/latest-recipes").get(function (req, res) {
     .toArray(function (err, result) {
       if (err) throw err;
       res.json(result);
-    });    
+    });   
+    
 });
 
 module.exports = recipesRoutes;

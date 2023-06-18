@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
   import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
   import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
-  import { useSpeechSynthesis } from 'react-speech-kit';
   import {useEffect} from 'react';
-  import { act } from 'react-dom/test-utils';
-  import './VoiceAssistent.css';
 
   const delay = ms => new Promise(
   resolve => setTimeout(resolve, ms)
@@ -24,17 +21,10 @@ import React, { useState } from 'react';
     const voices = synth.getVoices();  
     utterance.voice = voices[7]
     
-   //utterance.lang = "he-IL";
     const instructions = props.instructions
     const [instructionsCounter, setInstructionsCounter] = useState(0)
     const [order, setOrder] = useState('');
-    // const commands = [
-    //   {
-    //     command: '* is my name',
-    //     callback: (name) => setMessage(`Hi ${name}!`),
-    //     matchInterim: true
-    //   }
-    // ]; 
+
     
     const listItems = instructions && instructions.map((inst) =>
     <li>{inst}</li>)
@@ -51,7 +41,6 @@ import React, { useState } from 'react';
       setInstructionsCounter(1)
       utterance.text = instText
       speechSynthesis.speak(utterance);
-      //speak({language: "he-IL", voice: voices[2], text: instText, })
       let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
       let commas = instText.replace(/[^,]/g, "").length
       
@@ -94,7 +83,6 @@ import React, { useState } from 'react';
       
       utterance.text = instText
       speechSynthesis.speak(utterance);
-      //speak({language: "he-IL", voice: voices[2], text: instText, })
       let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
       let commas = instText.replace(/[^,]/g, "").length
       if(toContinue){
@@ -119,7 +107,6 @@ import React, { useState } from 'react';
         setOrder(transcript);
     }
     useEffect(() =>{
-      //console.log(transcript)
       if(transcript.includes("next")){
         read_Next_Instruction("next");
       }else if(transcript.includes("again")){

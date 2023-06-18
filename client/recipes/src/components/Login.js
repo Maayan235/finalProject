@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { useNavigate } from "react-router-dom";
 import './Login.css';
 import Register from './Register';
 
@@ -8,7 +7,6 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showRegister, setShowRegister] = useState(false);
-  // const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -25,10 +23,8 @@ function Login({ onLogin }) {
     const response = await fetch(`http://localhost:5000/users/find?username=${username}&password=${password}`);
     const data = await response.json();
 
-
     if (response.status === 200) {
-      onLogin(data._id); // set the userId in the parent App component
-      // navigate('/'); // navigate to the BasicStructure component
+      onLogin(data._id); 
     } else {
       setError('Invalid username or password');
     }

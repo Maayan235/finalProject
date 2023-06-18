@@ -8,6 +8,7 @@
 
 .card {
   width: calc(33.33% - 15px);
+  min-width: 200px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   /* border-radius: 5px; */
