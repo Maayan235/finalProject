@@ -47,7 +47,10 @@ recipesRoutes.route("/recipes/cuisine/:type").get(function (req, res) {
   let db_connect = dbo.getDb("RecipesWebsite");
   db_connect
     .collection("recipes")
-    .find({types: {$elemMatch:{$eq: req.params.type}}})
+    .find({ 
+      types: { $elemMatch: { $eq: req.params.type } },
+      published: true // Only return recipes with published: true
+    })
     .toArray(function (err, result) {
       if (err) throw err;
       res.json(result);
@@ -73,28 +76,21 @@ recipesRoutes.route("/recipes/add").post(function (req, res) {
   RecomandationsMatrix.addReciepeToMatrix(newRecipe)
   });
 
-
-recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
-  let db_connect = dbo.getDb("RecipesWebsite");
-  db_connect
-    .collection("recipes")
-    .find({title: {$regex: req.params.search, $options: 'i'}})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
-});
-
-recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
-  let db_connect = dbo.getDb("RecipesWebsite");
-  db_connect
-    .collection("recipes")
-    .find({title: {$regex: req.params.search, $options: 'i'}})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
-});
+  
+  recipesRoutes.route("/recipes/searched/:search").get(function (req, res) {
+    let db_connect = dbo.getDb("RecipesWebsite");
+    db_connect
+      .collection("recipes")
+      .find({ 
+        title: { $regex: req.params.search, $options: 'i' },
+        published: true // Only return recipes with published: true
+      })
+      .toArray(function (err, result) {
+        if (err) throw err;
+        res.json(result);
+      });
+  });
+  
 
 
 recipesRoutes.route("/recipes/editt").post(function (req, res) {
@@ -111,10 +107,10 @@ recipesRoutes.route("/recipes/editt").post(function (req, res) {
     types: updatedRecipe.types
   } }, function(err, result) {
     if (err) {
-    console.log(err);
-    res.status(400).send(err);
+      console.log(err);
+      res.status(400).send(err);
     } else {
-    res.status(200).send(result);
+      res.status(200).send({ recipeId: updatedRecipe._id });
     }
   });
   RecomandationsMatrix.updatedRecipe(updatedRecipe)

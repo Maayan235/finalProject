@@ -182,18 +182,32 @@ function AddReciepe({userId}) {
   async function handleSubmit(e) {
     e.preventDefault(); 
     
+    let response;
+
     if(edit){
-      console.log("edit.....")
-      const response = await fetch("http://localhost:5000/recipes/editt",{ // /${recipeId}", {
+      response = await fetch("http://localhost:5000/recipes/editt",{ 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(editRecipe),
-      });    
-    }else{
-
-      const response = await fetch("http://localhost:5000/recipes/add", {
+      })    
+      .catch(error => {
+        window.alert(error);
+        return;
+      });
+      if (response.ok) {
+        const result = await response.json();
+        setRecipeId(result.recipeId);
+        // route to recipe page
+        window.location.href = `http://localhost:3000/recipe/${result.recipeId}`;     
+      } else {
+        const error = await response.text();
+        window.alert("Error: " + error);
+        return;
+      }   
+    } else {
+      response = await fetch("http://localhost:5000/recipes/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -204,10 +218,12 @@ function AddReciepe({userId}) {
       window.alert(error);
       return;
     });
-
     if (response.ok) {
       const result = await response.json();
       setRecipeId(result.recipeId);
+      // add to user myRecipes
+      fetch(`http://localhost:5000/users/addToMyRecipes/${result.recipeId}/${userId}`, { method: 'PUT' })
+      // route to recipe page
       window.location.href = `http://localhost:3000/recipe/${result.recipeId}`;     
     } else {
       const error = await response.text();

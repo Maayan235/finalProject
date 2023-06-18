@@ -174,4 +174,30 @@ usersRoutes.put('/users/addFavorite/:recipeId/:userId', function (req, res) {
   }
 });
 
+// Route to add a recipe to user recipes
+usersRoutes.put('/users/addToMyRecipes/:recipeId/:userId', function (req, res) {
+  try {
+    const { recipeId, userId } = req.params;
+    const db_connect = dbo.getDb('RecipesWebsite');
+
+    db_connect.collection('users').findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      { $push: { myRecipes: recipeId } },
+      { returnOriginal: false },
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal server error' });
+        } else {
+          res.status(200).json(result.value);
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 module.exports = usersRoutes;
