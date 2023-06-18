@@ -279,8 +279,8 @@ function AddReciepe({userId}) {
       <label for="food-type">Select Recipe types:</label>
       <div class="checkbox-group" id="food-type">
               <div>
-          <input type="checkbox" id="veggie" name="veggie" value="veggie" onChange={handleTagChange}/>
-          <label for="veggie">Veggie</label>
+          <input type="checkbox" id="vegan" name="vegan" value="vegan" onChange={handleTagChange}/>
+          <label for="vegan">Vegan</label>
 
           <input type="checkbox" id="vegetarian" name="vegetarian" value="vegetarian" onChange={handleTagChange}/>
           <label for="vegetarian">Vegetarian</label>
