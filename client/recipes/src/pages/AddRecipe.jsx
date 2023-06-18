@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Compressor from 'compressorjs';
 import Switch from "react-switch";
 import noImage from '../images/noimageavailable.png'
-
+import { useParams } from 'react-router-dom';
 import addImage from '../images/addPicture.png'
 
 import "./AddRecipe.css"; 

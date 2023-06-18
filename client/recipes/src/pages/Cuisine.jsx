@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import RecipeCard from '../components/RecipeCard';
 import '../components/Card.css';
+import { useParams } from 'react-router-dom';
+
 
 function Cuisine() {
   const [recipes, setRecipes] = useState([]);
