@@ -18,7 +18,6 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 
 function BasicStructure({ userId, onLogout }) {
-  console.log(userId)
   const [showCategories, setShowCategories] = useState(false);
 
   const toggleCategories = () => {

@@ -97,8 +97,6 @@ import React, { useState } from 'react';
       //speak({language: "he-IL", voice: voices[2], text: instText, })
       let sentences = 1 > instText.replace(/[^.]/g, "").length ? 1 : instText.replace(/[^.]/g, "").length
       let commas = instText.replace(/[^,]/g, "").length
-    //   console.log("sentences: " + sentences)
-    //   console.log("commas: " + commas)
       if(toContinue){
         await delay(instText.length * 70 +  sentences * 700 + commas * 350);
         listenContinuously();
@@ -121,7 +119,7 @@ import React, { useState } from 'react';
         setOrder(transcript);
     }
     useEffect(() =>{
-      console.log(transcript)
+      //console.log(transcript)
       if(transcript.includes("next")){
         read_Next_Instruction("next");
       }else if(transcript.includes("again")){

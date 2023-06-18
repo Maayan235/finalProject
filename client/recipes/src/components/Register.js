@@ -54,14 +54,10 @@ function Register({afterRegister, backToLogin}) {
     }
 
     // All checks passed, register user
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    
 
     let newUser = { username:username , email:email, password:password };
-
-    console.log(JSON.stringify(newUser));
-    await fetch("http://localhost:5000/users/add", {
+      await fetch("http://localhost:5000/users/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

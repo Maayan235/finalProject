@@ -10,6 +10,7 @@ import noImage from '../images/noimageavailable.png'
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
 function AddReciepe({userId}) {
+  const [edited, setEdited] = useState(false);
   const [edit, setEdit] = useState(false);
   const [recipeId,setRecipeId] = useState("");
   const [recipeTitle, setRecipeTitle] = useState("");
@@ -42,29 +43,31 @@ function AddReciepe({userId}) {
         setIngredients(recipe.ingredients);
         setRecipePicture(recipe.image);
         setInstructions(recipe.instructions);
+    
         if (recipe.tags && recipe.tags.length > 0) {
           setTags(recipe.tags);
         }
+    
         setTypes(recipe.types);
+    
         if (recipe.published != null) {
           setIsPublished(recipe.isPublished);
         } else {
           setIsPublished(false);
         }
-        if (params.id) {
-          setEdit(true);
-          getRecipe(params.id);
-        }
       }
     
-      if (params.id) {
+      if (params.id && !edit && !edited) {
+        setEdit(true);
+        setEdited(true);
         getRecipe(params.id);
       }
     
       return () => {
         // Cleanup function if needed
       };
-    }, [params.id]);
+    }, [params.id, edit, edited]);
+    
     
 
   const handleInstructionChange = (idx, e) => {
@@ -178,11 +181,9 @@ function AddReciepe({userId}) {
 
   async function handleSubmit(e) {
     e.preventDefault(); 
-    console.log(e);
-    console.log(JSON.stringify(newRecipe));
+    
     if(edit){
       console.log("edit.....")
-      console.log(recipeId)
       const response = await fetch("http://localhost:5000/recipes/editt",{ // /${recipeId}", {
         method: "POST",
         headers: {
@@ -192,7 +193,6 @@ function AddReciepe({userId}) {
       });    
     }else{
 
-      console.log("no edit.....")
       const response = await fetch("http://localhost:5000/recipes/add", {
       method: "POST",
       headers: {
@@ -220,9 +220,7 @@ function AddReciepe({userId}) {
 
 
   return (
-
     <FormWrapper  className="AddReciepe" onSubmit={handleSubmit}>
-    
       <label>
         <div className="margin-top">Recipe Name:</div>
         <input type="text" value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
@@ -318,7 +316,7 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 3rem auto;
+  margin: 1rem auto;
   margin-bottom: 4rem;
   max-width: 900px;
   width: 85%;
@@ -345,7 +343,6 @@ const FormWrapper = styled.form`
     border: none;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
     margin-top: 0.5rem;
-    min-width: 600px;
   }
   textarea {
     height: 8rem;
