@@ -1,11 +1,9 @@
 import Home from "./Home";
-import Category from "../components/Category";
 import Cuisine from "./Cuisine";
 import Searched from "./Searched";
 import Recipe from "./Recipe";
 import React from 'react'
 import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom'
-import Recommended from "../components/Recommended";
 import AddRecipe from './AddRecipe'
 import Favorites from "./Favorites";
 import MyRecipes from "./MyRecipes";
@@ -13,7 +11,6 @@ import MyRecipes from "./MyRecipes";
 
 function Pages({userId}) {
   return (
-
     <Routes>
       <Route path='/' element={<Home userId={userId} />} />
       <Route path='/cuisine/:type' element={<Cuisine userId={userId}/>} />

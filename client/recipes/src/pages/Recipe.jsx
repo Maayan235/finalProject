@@ -2,11 +2,8 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import VoiceAssistent from '../components/VoiceAssistent';
-import { FaRegStar, FaStar, FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-import { AiOutlineStar } from 'react-icons/ai';
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import favoriteBtn from '../images/favorite_icon.png'
 import favoriteBtnActive from '../images/favorite_icon_active.png'
 import { Link } from "react-router-dom";
@@ -21,8 +18,6 @@ function Recipe({userId}) {
   const [showPopup, setShowPopup] = useState(false);
   const [isMyRecipe, setIsMyRecipe] = useState(false);
   const [recipeImageUrl, setRecipeImageUrl] = useState(noImage);
-  // const instructionsCopy = [...recipe.instructions];
-
 
   let params = useParams();
 
@@ -317,12 +312,6 @@ const DetailWrapper = styled.div`
   
 
 `;
-
-
-
-
-
-
 
 
 export default Recipe 

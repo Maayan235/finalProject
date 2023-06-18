@@ -1,8 +1,6 @@
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router";
 import styled from 'styled-components';
 import Compressor from 'compressorjs';
-import { Link, useParams } from 'react-router-dom';
 import Switch from "react-switch";
 import noImage from '../images/noimageavailable.png'
 

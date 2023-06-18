@@ -1,7 +1,5 @@
 import { useEffect , useState} from "react";
-import styled from "styled-components";
 import '@splidejs/react-splide/css';
-import { Link } from "react-router-dom";
 import '../components/Card.css'
 import RecipeCard from "../components/RecipeCard";
 

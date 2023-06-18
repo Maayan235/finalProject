@@ -2,7 +2,6 @@ import Recommended from "../components/Recommended";
 import { useEffect, useState } from 'react';
 import React from 'react'
 import Category from "../components/Category";
-import Search from "../components/Search";
 import styled from "styled-components";
 import AudioChefImg from "../images/homePageImg3.jpg";
 import RecentRecipes from "../components/recentRecipes";
@@ -11,7 +10,6 @@ function Home({userId}) {
 
   const [username, setUsername] = useState('');
 
-  // This method fetches the records from the database.
   useEffect(() => {
     async function getUser() {
       const response = await fetch(`http://localhost:5000/users/${userId}`);

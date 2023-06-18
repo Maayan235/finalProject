@@ -1,14 +1,7 @@
 import Pages from "./pages/Pages";
-import { BrowserRouter } from 'react-router-dom';
-import Category from "./components/Category";
 import Search from "./components/Search";
-import Login from "./components/Login";
-import Register from "./components/Register";
-
 import styled from "styled-components";
-import {GiKnifeFork} from "react-icons/gi";
 import { Link } from "react-router-dom";
-import img from './images/header4.jpg'
 import logo2 from './images/logo2.jpg'
 import './BasicStructure.css'
 import React, { useState } from 'react';

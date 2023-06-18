@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import '../components/Card.css';
 
 function Cuisine() {
-  const [cuisine, setCuisine] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [recipesByType, setRecipesByType] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
   let params = useParams();
 
-  // Fetch recipes based on the selected cuisine type
   useEffect(() => {
     async function getRecipes(type) {
       const response = await fetch(`http://localhost:5000/recipes/cuisine/${type}`);
@@ -32,7 +28,6 @@ function Cuisine() {
     }
   }, [params.type]);
 
-  // Filter recipes based on selected tags
   useEffect(() => {
     if (selectedTags.length === 0) {
       setFilteredRecipes(recipes);

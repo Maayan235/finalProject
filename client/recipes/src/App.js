@@ -1,18 +1,9 @@
-import Pages from "./pages/Pages";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Category from "./components/Category";
-import Search from "./components/Search";
 import Login from "./components/Login";
-import Register from "./components/Register";
-
 import styled from "styled-components";
-import {GiKnifeFork} from "react-icons/gi";
-import { Link } from "react-router-dom";
 import img from './images/header4.jpg'
-import logo from './images/logo.jpg'
 import './App.css'
 import React, { useState,  useEffect } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import BasicStructure from "./BasicStructure";
 
 
