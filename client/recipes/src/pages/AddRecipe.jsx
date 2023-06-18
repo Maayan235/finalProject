@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import Switch from "react-switch";
 import noImage from '../images/noimageavailable.png'
 
+import addImage from '../images/addPicture.png'
 
 import "./AddRecipe.css"; // Import the CSS file with the centering styles
 
@@ -261,10 +262,19 @@ function AddReciepe({userId}) {
         </button>
       </label>
 
-      <label>
-        <div className="margin-top">Recipe Picture:</div>
-        <input type="file" onChange={handleRecipePictureChange} />
-      </label>
+      <label htmlFor="fileInput">
+  <div className="margin-top">Recipe Picture:</div>
+  <div className="image-upload">
+    <img src={addImage} alt="Recipe Picture" 
+    style={{ width: '160px', height: '130px' }}/>
+    <input
+      id="fileInput"
+      type="file"
+      onChange={handleRecipePictureChange}
+      style={{ display: 'none' }}
+    />
+  </div>
+</label>
 
       <label for="food-type">Select Recipe types:</label>
       <div class="checkbox-group" id="food-type">
